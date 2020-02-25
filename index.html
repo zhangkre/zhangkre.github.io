@@ -70,7 +70,7 @@
     
     
     
-    <article id="post-jianzhi-1" class="article article-type-post" itemscope
+    <article id="post-JAVA中的包" class="article article-type-post" itemscope
   itemprop="blogPost" data-scroll-reveal>
 
   <div class="article-inner">
@@ -78,8 +78,8 @@
     <header class="article-header">
        
 <h2 itemprop="name">
-  <a class="article-title" href="/2020/02/22/jianzhi-1/"
-    >剑指Offer--1</a
+  <a class="article-title" href="/2020/02/26/JAVA%E4%B8%AD%E7%9A%84%E5%8C%85/"
+    >JAVA中的包</a
   >
 </h2>
   
@@ -89,12 +89,12 @@
 
     
     <div class="article-meta">
-      <a href="/2020/02/22/jianzhi-1/" class="article-date">
-  <time datetime="2020-02-22T05:57:39.000Z" itemprop="datePublished">2020-02-22</time>
+      <a href="/2020/02/26/JAVA%E4%B8%AD%E7%9A%84%E5%8C%85/" class="article-date">
+  <time datetime="2020-02-25T17:15:00.000Z" itemprop="datePublished">2020-02-26</time>
 </a>
       
   <div class="article-category">
-    <a class="article-category-link" href="/categories/%E5%88%B7%E9%A2%98/">刷题</a>
+    <a class="article-category-link" href="/categories/JAVA/">JAVA</a>
   </div>
 
       
@@ -113,12 +113,21 @@
       
 
       
-      <h1 id="fdgjlgfdgj"><a href="#fdgjlgfdgj" class="headerlink" title="fdgjlgfdgj"></a>fdgjlgfdgj</h1><ul>
-<li>电饭锅</li>
-</ul>
-<ul>
-<li>非递归</li>
-<li>凤凰股份</li>
+      <h2 id="Java-包-package"><a href="#Java-包-package" class="headerlink" title="Java 包(package)"></a>Java 包(package)</h2><p><em>为了更好地组织类，Java 提供了包机制，用于区别类名的命名空间。</em></p>
+<h5 id="包的作用"><a href="#包的作用" class="headerlink" title="包的作用"></a>包的作用</h5><ol>
+<li><p>把功能相似或相关的类或接口组织在同一个包中，方便类的查找和使用。</p>
+</li>
+<li><p>如同文件夹一样，包也采用了树形目录的存储方式。<strong>同一个包中的类名字是不同的，不同的包中的类的名字是可以相同的</strong>，当同时调用两个不同包中相同类名的类时，应该加上包名加以区别。因此，包可以避免名字冲突。</p>
+</li>
+<li><p>包也限定了访问权限，拥有包访问权限的类才能访问某个包中的类。</p>
+</li>
+</ol>
+<p>Java 使用包（package）这种机制是为了防止命名冲突，访问控制，提供搜索和定位类（class）、接口、枚举（enumerations）和注释（annotation）等。</p>
+<h5 id="默认包-缺省包（default-package）"><a href="#默认包-缺省包（default-package）" class="headerlink" title="默认包/缺省包（default package）"></a>默认包/缺省包（default package）</h5><ul>
+<li>这里默认包的意思是指没有写package的java类文件所在的包。</li>
+<li>因为默认包的类没有包名, 在被有包结构的类引用时，会被当成本包内的类。即编译器会在comm包下查找helloworld类，自然是找不到的。而由于没有包名，也无法使用import导入。</li>
+<li><strong>同一个包下的类文件之间不用写import语句也能成功调用。</strong></li>
+<li>不在同一个包下的类需要通过import导入后才能调用。</li>
 </ul>
 
       
@@ -132,7 +141,83 @@
     <footer class="article-footer">
       
       
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%88%B7%E9%A2%98/" rel="tag">刷题</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%89%91%E6%8C%87/" rel="tag">剑指</a></li></ul>
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java/" rel="tag">java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/package/" rel="tag">package</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%8C%85/" rel="tag">包</a></li></ul>
+
+
+    </footer>
+
+  </div>
+
+  
+
+  
+
+  
+
+</article>
+    
+    <article id="post-1" class="article article-type-post" itemscope
+  itemprop="blogPost" data-scroll-reveal>
+
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2020/02/22/1/"
+    >JAVA中的ClassLoder</a
+  >
+</h2>
+  
+
+    </header>
+    
+
+    
+    <div class="article-meta">
+      <a href="/2020/02/22/1/" class="article-date">
+  <time datetime="2020-02-22T05:57:00.000Z" itemprop="datePublished">2020-02-22</time>
+</a>
+      
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/JAVA/">JAVA</a>
+  </div>
+
+      
+      
+      
+    </div>
+    
+
+    
+
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+
+
+      
+
+      
+      <h1 id="ClassLoder"><a href="#ClassLoder" class="headerlink" title="ClassLoder"></a>ClassLoder</h1><p>JVM的机制是自上而下加载，自下而上检查</p>
+<p>最开始是由<strong>BootStrap ClassLoader</strong>加载rt.jar下的文件，也就是java最最核心的部分；然后由<strong>Extension ClassLoader</strong>加载ext下的文件；再有<strong>App ClassLoader</strong>加载用户自己的文件。</p>
+<p>由于<strong>BootStrap ClassLoader</strong>是用c++写的，所以在返回该ClassLoader时会返回null。显然，Class为java.lang.Class，是rt.jar中的，由BootStrap ClassLoader加载，所以返回null</p>
+<p><strong>类加载器也是Java类，因为Java类的类加载器本身也是要被类加载器加载的，显然必须有第一个类加载器不是Java类，这个正是BootStrap,使用C/C++代码写的，已经封装到JVM内核中了，而ExtClassLoader和AppClassLoader是Java类。</strong></p>
+<p><img src="https://img-blog.csdn.net/20140101125755203?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvamlhbmd3ZWkwOTEwNDEwMDAz/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="upload successful"><br>双亲委托机制的类加载方式</p>
+<p>如果自己写一个String类</p>
+
+      
+      <!-- reward -->
+      
+    </div>
+    
+    
+      <!-- copyright -->
+      
+    <footer class="article-footer">
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java/" rel="tag">java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%BB%86%E8%8A%82/" rel="tag">细节</a></li></ul>
 
 
     </footer>
