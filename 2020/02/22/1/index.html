@@ -63,7 +63,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-quill-pen-line"></i>
             <span class="post-meta-item-text"> 字数统计:</span>
-            <span class="post-count">313字</span>
+            <span class="post-count">320字</span>
         </span>
     </span>
 
@@ -104,8 +104,12 @@
 <p>由于<strong>BootStrap ClassLoader</strong>是用c++写的，所以在返回该ClassLoader时会返回null。显然，Class为java.lang.Class，是rt.jar中的，由BootStrap ClassLoader加载，所以返回null</p>
 <p><strong>类加载器也是Java类，因为Java类的类加载器本身也是要被类加载器加载的，显然必须有第一个类加载器不是Java类，这个正是BootStrap,使用C/C++代码写的，已经封装到JVM内核中了，而ExtClassLoader和AppClassLoader是Java类。</strong></p>
 <p><img src="https://img-blog.csdn.net/20140101125755203?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvamlhbmd3ZWkwOTEwNDEwMDAz/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="upload successful"><br>双亲委托机制的类加载方式</p>
-<p>如果自己写一个java.lang.String类, 用AppClassLoader去加载的话，根据双亲委托机制，最终会加载到rt.jar里面的java.lang.String类，自己写的这个java.lang.String类根本不会被加载；如果自己写一个ClassLoader去特意加载自己写的java.lang.String类的话，也不会成功，因为AppClassLoader会拒绝加载java.开头的类，在<code>preDefineClass</code>中可以看到</p>
-<figure class="highlight plain"><figcaption><span>((name !</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">    throw new SecurityException</span><br><span class="line">        (&quot;Prohibited package name: &quot; +</span><br><span class="line">         name.substring(0, name.lastIndexOf(&#39;.&#39;)));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>如果自己写一个<code>java.lang.String</code>类, 用<code>AppClassLoader</code>去加载的话，根据双亲委托机制，最终会加载到rt.jar里面的<code>java.lang.String</code>类，自己写的这个<code>java.lang.String</code>类根本不会被加载；如果自己写一个<code>ClassLoader</code>去特意加载自己写的<code>java.lang.String</code>类的话，也不会成功，因为<code>AppClassLoader</code>会拒绝加载java.开头的类，在<code>preDefineClass</code>中可以看到</p>
+<pre><code>if ((name != null) &amp;&amp; name.startsWith(&quot;java.&quot;)) {
+        throw new SecurityException
+            (&quot;Prohibited package name: &quot; +
+             name.substring(0, name.lastIndexOf(&apos;.&apos;)));
+    } </code></pre>
       
       <!-- reward -->
       
