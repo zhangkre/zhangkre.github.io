@@ -70,6 +70,80 @@
     
     
     
+    <article id="post-HTTPS加密" class="article article-type-post" itemscope
+  itemprop="blogPost" data-scroll-reveal>
+
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2020/02/29/HTTPS%E5%8A%A0%E5%AF%86/"
+    >URI URL URN的区别</a
+  >
+</h2>
+  
+
+    </header>
+    
+
+    
+    <div class="article-meta">
+      <a href="/2020/02/29/HTTPS%E5%8A%A0%E5%AF%86/" class="article-date">
+  <time datetime="2020-02-29T10:09:00.000Z" itemprop="datePublished">2020-02-29</time>
+</a>
+      
+      
+      
+      
+    </div>
+    
+
+    
+
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+
+
+      
+
+      
+      <p>首先来说一下<strong>URI 、URL、URN</strong>的区别</p>
+<ul>
+<li>URI是统一资源标识符（Uniform Resource Identifier）</li>
+<li>URL是统一资源定位符（Uniform Resource Locator）</li>
+<li>URN是统一资源命名（Uniform Resource Name）</li>
+</ul>
+<p>URL和URN属于URI，也就是说URL和URN是URI的子集。打个比方，你的身份证号就是URN，可以唯一表示你这个人；URL是你的住址，可以通过住址找到你这个人；</p>
+<p>网址<em><a href="http://www.baidu.com" target="_blank" rel="noopener">http://www.baidu.com</a></em>属于URL</p>
+
+      
+      <!-- reward -->
+      
+    </div>
+    
+    
+      <!-- copyright -->
+      
+    <footer class="article-footer">
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/HTTP/" rel="tag">HTTP</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/URI/" rel="tag">URI</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/URL/" rel="tag">URL</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/URN/" rel="tag">URN</a></li></ul>
+
+
+    </footer>
+
+  </div>
+
+  
+
+  
+
+  
+
+</article>
+    
     <article id="post-JAVA中的包" class="article article-type-post" itemscope
   itemprop="blogPost" data-scroll-reveal>
 
@@ -203,13 +277,13 @@
 <p>最开始是由<strong>BootStrap ClassLoader</strong>加载rt.jar下的文件，也就是java最最核心的部分；然后由<strong>Extension ClassLoader</strong>加载ext下的文件；再有<strong>App ClassLoader</strong>加载用户自己的文件。</p>
 <p>由于<strong>BootStrap ClassLoader</strong>是用c++写的，所以在返回该ClassLoader时会返回null。显然，Class为java.lang.Class，是rt.jar中的，由BootStrap ClassLoader加载，所以返回null</p>
 <p><strong>类加载器也是Java类，因为Java类的类加载器本身也是要被类加载器加载的，显然必须有第一个类加载器不是Java类，这个正是BootStrap,使用C/C++代码写的，已经封装到JVM内核中了，而ExtClassLoader和AppClassLoader是Java类。</strong></p>
-<p><img src="https://img-blog.csdn.net/20140101125755203?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvamlhbmd3ZWkwOTEwNDEwMDAz/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/Center" alt="upload successful"><br>双亲委托机制的类加载方式</p>
+<p><img src="https://pic.downk.cc/item/5e5a3c4c6127cc07134d7c44.jpg" alt="upload successful"><br>双亲委托机制的类加载方式</p>
 <p>如果自己写一个<code>java.lang.String</code>类, 用<code>AppClassLoader</code>去加载的话，根据双亲委托机制，最终会加载到rt.jar里面的<code>java.lang.String</code>类，自己写的这个<code>java.lang.String</code>类根本不会被加载；如果自己写一个<code>ClassLoader</code>去特意加载自己写的<code>java.lang.String</code>类的话，也不会成功，因为<code>AppClassLoader</code>会拒绝加载java.开头的类，在<code>preDefineClass</code>中可以看到</p>
 <pre><code>if ((name != null) &amp;&amp; name.startsWith(&quot;java.&quot;)) {
         throw new SecurityException
             (&quot;Prohibited package name: &quot; +
              name.substring(0, name.lastIndexOf(&apos;.&apos;)));
-    } </code></pre>
+    }</code></pre>
       
       <!-- reward -->
       
