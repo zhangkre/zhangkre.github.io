@@ -103,7 +103,7 @@
 <p>最开始是由<strong>BootStrap ClassLoader</strong>加载rt.jar下的文件，也就是java最最核心的部分；然后由<strong>Extension ClassLoader</strong>加载ext下的文件；再有<strong>App ClassLoader</strong>加载用户自己的文件。</p>
 <p>由于<strong>BootStrap ClassLoader</strong>是用c++写的，所以在返回该ClassLoader时会返回null。显然，Class为java.lang.Class，是rt.jar中的，由BootStrap ClassLoader加载，所以返回null</p>
 <p><strong>类加载器也是Java类，因为Java类的类加载器本身也是要被类加载器加载的，显然必须有第一个类加载器不是Java类，这个正是BootStrap,使用C/C++代码写的，已经封装到JVM内核中了，而ExtClassLoader和AppClassLoader是Java类。</strong></p>
-<p><img src="https://pic.downk.cc/item/5e5a3c4c6127cc07134d7c44.jpg" alt="upload successful"><br>双亲委托机制的类加载方式</p>
+<p><img src="https://pic.downk.cc/item/5e5a3c4c6127cc07134d7c44.jpg" alt=""><br>双亲委托机制的类加载方式</p>
 <p>如果自己写一个<code>java.lang.String</code>类, 用<code>AppClassLoader</code>去加载的话，根据双亲委托机制，最终会加载到rt.jar里面的<code>java.lang.String</code>类，自己写的这个<code>java.lang.String</code>类根本不会被加载；如果自己写一个<code>ClassLoader</code>去特意加载自己写的<code>java.lang.String</code>类的话，也不会成功，因为<code>AppClassLoader</code>会拒绝加载java.开头的类，在<code>preDefineClass</code>中可以看到</p>
 <pre><code>if ((name != null) &amp;&amp; name.startsWith(&quot;java.&quot;)) {
         throw new SecurityException
