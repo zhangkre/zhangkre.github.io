@@ -70,6 +70,75 @@
     
     
     
+    <article id="post-合并k个有序链表" class="article article-type-post" itemscope
+  itemprop="blogPost" data-scroll-reveal>
+
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2020/04/29/%E5%90%88%E5%B9%B6k%E4%B8%AA%E6%9C%89%E5%BA%8F%E9%93%BE%E8%A1%A8/"
+    >合并k个有序链表</a
+  >
+</h2>
+  
+
+    </header>
+    
+
+    
+    <div class="article-meta">
+      <a href="/2020/04/29/%E5%90%88%E5%B9%B6k%E4%B8%AA%E6%9C%89%E5%BA%8F%E9%93%BE%E8%A1%A8/" class="article-date">
+  <time datetime="2020-04-29T14:34:46.000Z" itemprop="datePublished">2020-04-29</time>
+</a>
+      
+      
+      
+      
+    </div>
+    
+
+    
+
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+
+
+      
+
+      
+      <h4 id="合并k个长度为n的有序链表"><a href="#合并k个长度为n的有序链表" class="headerlink" title="合并k个长度为n的有序链表"></a>合并k个长度为n的有序链表</h4><h5 id="方法一"><a href="#方法一" class="headerlink" title="方法一"></a>方法一</h5><p>依次合并k个链表，时间复杂度：<code>O(k*k*n)</code></p>
+<h5 id="方法二"><a href="#方法二" class="headerlink" title="方法二"></a>方法二</h5><p>分治法</p>
+<h5 id="方法三"><a href="#方法三" class="headerlink" title="方法三"></a>方法三</h5><p>最小堆法</p>
+<p>维护一个大小为k的最小堆，每次取对顶元素加入到结果链表后面，并将将元素的下一个点加入到最小堆中，当堆为空时返回结果。</p>
+<p><strong>* 注意：kava中使用PriorityQueue实现最小堆的功能，默认是最小堆，若要实现最大堆需重载compare方法，可使用匿名函数<code>(o1,o2)-&gt;Integer.compare(o2,o1)</code>*</strong></p>
+
+      
+      <!-- reward -->
+      
+    </div>
+    
+    
+      <!-- copyright -->
+      
+    <footer class="article-footer">
+      
+      
+
+    </footer>
+
+  </div>
+
+  
+
+  
+
+  
+
+</article>
+    
     <article id="post-全排列-回溯解法" class="article article-type-post" itemscope
   itemprop="blogPost" data-scroll-reveal>
 
