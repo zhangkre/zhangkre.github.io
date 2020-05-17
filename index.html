@@ -111,6 +111,7 @@
       
       <p><strong>题目描述</strong></p>
 <p>用两个栈来实现一个队列，完成队列的Push和Pop操作。 队列中的元素为int类型。</p>
+<p><strong>思路</strong></p>
 <p>朴素的想法： stack1用来存元素，每次push新元素进stack1， 队列pop的时候先将stack1的所有元素pop, 并push进stack2, res = stack2.pop(), 接着再将stack2中所有的元素pop，并push进stack1。</p>
 <p>正解: 队列是先进先出，栈是先进后出，如何用两个栈来实现这种先进先出呢？<br>其实很简单，我们假设用stack1专门来装元素，那么直接stack1.pop肯定是不行的，这个时候stack2就要发挥作用了。</p>
 <p>我们的规则是：只要stack2中有元素就pop，如果stack2为空，则将stack1中所有元素倒进satck2中，就是说，新元素只进stack1，元素出来只从stack2出来。</p>
