@@ -70,6 +70,143 @@
     
     
     
+    <article id="post-两个栈实现队列" class="article article-type-post" itemscope
+  itemprop="blogPost" data-scroll-reveal>
+
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2020/05/17/%E4%B8%A4%E4%B8%AA%E6%A0%88%E5%AE%9E%E7%8E%B0%E9%98%9F%E5%88%97/"
+    >两个栈实现队列</a
+  >
+</h2>
+  
+
+    </header>
+    
+
+    
+    <div class="article-meta">
+      <a href="/2020/05/17/%E4%B8%A4%E4%B8%AA%E6%A0%88%E5%AE%9E%E7%8E%B0%E9%98%9F%E5%88%97/" class="article-date">
+  <time datetime="2020-05-17T13:27:51.000Z" itemprop="datePublished">2020-05-17</time>
+</a>
+      
+      
+      
+      
+    </div>
+    
+
+    
+
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+
+
+      
+
+      
+      <p><strong>题目描述</strong></p>
+<p>用两个栈来实现一个队列，完成队列的Push和Pop操作。 队列中的元素为int类型。</p>
+<p>朴素的想法： stack1用来存元素，每次push新元素进stack1， 队列pop的时候先将stack1的所有元素pop, 并push进stack2, res = stack2.pop(), 接着再将stack2中所有的元素pop，并push进stack1。</p>
+<p>正解: 队列是先进先出，栈是先进后出，如何用两个栈来实现这种先进先出呢？<br>其实很简单，我们假设用stack1专门来装元素，那么直接stack1.pop肯定是不行的，这个时候stack2就要发挥作用了。</p>
+<p>我们的规则是：只要stack2中有元素就pop，如果stack2为空，则将stack1中所有元素倒进satck2中，就是说，新元素只进stack1，元素出来只从stack2出来。</p>
+<p>这样子，就能保证每次从stack2中pop出来的元素就是最老的元素了。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.Stack;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    Stack&lt;Integer&gt; stack1 = <span class="keyword">new</span> Stack&lt;Integer&gt;();</span><br><span class="line">    Stack&lt;Integer&gt; stack2 = <span class="keyword">new</span> Stack&lt;Integer&gt;();</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">push</span><span class="params">(<span class="keyword">int</span> node)</span> </span>&#123;</span><br><span class="line">        stack1.push(node);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">pop</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span>( stack2.isEmpty() )&#123;</span><br><span class="line">            <span class="keyword">while</span>( !stack1.isEmpty() )&#123;</span><br><span class="line">                stack2.push( stack1.pop() );</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> stack2.pop();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+      
+      <!-- reward -->
+      
+    </div>
+    
+    
+      <!-- copyright -->
+      
+    <footer class="article-footer">
+      
+      
+
+    </footer>
+
+  </div>
+
+  
+
+  
+
+  
+
+</article>
+    
+    <article id="post-重建二叉树" class="article article-type-post" itemscope
+  itemprop="blogPost" data-scroll-reveal>
+
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2020/05/17/%E9%87%8D%E5%BB%BA%E4%BA%8C%E5%8F%89%E6%A0%91/"
+    >重建二叉树</a
+  >
+</h2>
+  
+
+    </header>
+    
+
+    
+    <div class="article-meta">
+      <a href="/2020/05/17/%E9%87%8D%E5%BB%BA%E4%BA%8C%E5%8F%89%E6%A0%91/" class="article-date">
+  <time datetime="2020-05-17T13:18:55.000Z" itemprop="datePublished">2020-05-17</time>
+</a>
+      
+      
+      
+      
+    </div>
+    
+
+    
+
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+
+
+      
+
+      
+      <p><strong>题目描述</strong></p>
+<p>输入某二叉树的前序遍历和中序遍历的结果，请重建出该二叉树。假设输入的前序遍历和中序遍历的结果中都不含重复的数字。例如输入前序遍历序列{1,2,4,7,3,5,6,8}和中序遍历序列{4,7,2,1,5,3,8,6}，则重建二叉树并返回。</p>
+<p>贴一张盗的图<br><img src="https://pic.downk.cc/item/5ec13a07c2a9a83be56aea65.jpg" alt=""></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Definition for binary tree</span></span><br><span class="line"><span class="comment"> * public class TreeNode &#123;</span></span><br><span class="line"><span class="comment"> *     int val;</span></span><br><span class="line"><span class="comment"> *     TreeNode left;</span></span><br><span class="line"><span class="comment"> *     TreeNode right;</span></span><br><span class="line"><span class="comment"> *     TreeNode(int x) &#123; val = x; &#125;</span></span><br><span class="line"><span class="comment"> * &#125;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> TreeNode <span class="title">reConstructBinaryTree</span><span class="params">(<span class="keyword">int</span> [] pre,<span class="keyword">int</span> [] in)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> reConstructBinaryTree(pre, <span class="number">0</span>, in, <span class="number">0</span>, in.length-<span class="number">1</span>);</span><br><span class="line">    &#125;</span><br><span class="line"><span class="comment">//	pre &#123;1,2,4,7,3,5,6,8&#125;</span></span><br><span class="line"><span class="comment">//	in  &#123;4,7,2,1,5,3,8,6&#125;</span></span><br><span class="line">	</span><br><span class="line">    <span class="function"><span class="keyword">private</span> TreeNode <span class="title">reConstructBinaryTree</span><span class="params">(<span class="keyword">int</span> [] pre, <span class="keyword">int</span> preIdx, <span class="keyword">int</span>[] in, <span class="keyword">int</span> inL, <span class="keyword">int</span> inR)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">if</span>( (preIdx &gt;= pre.length) || (inL &gt; inR) ) <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">        <span class="keyword">int</span> rootVal = pre[preIdx];</span><br><span class="line">        TreeNode root = <span class="keyword">new</span> TreeNode(rootVal);</span><br><span class="line">        <span class="keyword">int</span> i=<span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span>(i = inL; i &lt;= inR; i++)&#123;</span><br><span class="line">            <span class="keyword">if</span>(rootVal == in[i])&#123;</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        root.left = reConstructBinaryTree(pre, preIdx+<span class="number">1</span>, in, inL, i-<span class="number">1</span>);</span><br><span class="line">        root.right = reConstructBinaryTree(pre, preIdx+(i-inL+<span class="number">1</span>), in, i+<span class="number">1</span>, inR);</span><br><span class="line">        <span class="keyword">return</span> root;</span><br><span class="line">    &#125; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+      
+      <!-- reward -->
+      
+    </div>
+    
+    
+      <!-- copyright -->
+      
+    <footer class="article-footer">
+      
+      
+
+    </footer>
+
+  </div>
+
+  
+
+  
+
+  
+
+</article>
+    
     <article id="post-最大正方形" class="article article-type-post" itemscope
   itemprop="blogPost" data-scroll-reveal>
 
@@ -644,89 +781,14 @@
 
 </article>
     
-    <article id="post-1" class="article article-type-post" itemscope
-  itemprop="blogPost" data-scroll-reveal>
-
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2020/02/22/1/"
-    >JAVA中的ClassLoder</a
-  >
-</h2>
-  
-
-    </header>
-    
-
-    
-    <div class="article-meta">
-      <a href="/2020/02/22/1/" class="article-date">
-  <time datetime="2020-02-22T05:57:00.000Z" itemprop="datePublished">2020-02-22</time>
-</a>
-      
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/JAVA/">JAVA</a>
-  </div>
-
-      
-      
-      
-    </div>
-    
-
-    
-
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-
-
-      
-
-      
-      <h1 id="ClassLoder"><a href="#ClassLoder" class="headerlink" title="ClassLoder"></a>ClassLoder</h1><p>JVM的机制是自上而下加载，自下而上检查</p>
-<p>最开始是由<strong>BootStrap ClassLoader</strong>加载rt.jar下的文件，也就是java最最核心的部分；然后由<strong>Extension ClassLoader</strong>加载ext下的文件；再有<strong>App ClassLoader</strong>加载用户自己的文件。</p>
-<p>由于<strong>BootStrap ClassLoader</strong>是用c++写的，所以在返回该ClassLoader时会返回null。显然，Class为java.lang.Class，是rt.jar中的，由BootStrap ClassLoader加载，所以返回null</p>
-<p><strong>类加载器也是Java类，因为Java类的类加载器本身也是要被类加载器加载的，显然必须有第一个类加载器不是Java类，这个正是BootStrap,使用C/C++代码写的，已经封装到JVM内核中了，而ExtClassLoader和AppClassLoader是Java类。</strong></p>
-<p><img src="https://pic.downk.cc/item/5e5a3c4c6127cc07134d7c44.jpg" alt=""><br>双亲委托机制的类加载方式</p>
-<p>如果自己写一个<code>java.lang.String</code>类, 用<code>AppClassLoader</code>去加载的话，根据双亲委托机制，最终会加载到rt.jar里面的<code>java.lang.String</code>类，自己写的这个<code>java.lang.String</code>类根本不会被加载；如果自己写一个<code>ClassLoader</code>去特意加载自己写的<code>java.lang.String</code>类的话，也不会成功，因为<code>AppClassLoader</code>会拒绝加载java.开头的类，在<code>preDefineClass</code>中可以看到</p>
-<pre><code>if ((name != null) &amp;&amp; name.startsWith(&quot;java.&quot;)) {
-        throw new SecurityException
-            (&quot;Prohibited package name: &quot; +
-             name.substring(0, name.lastIndexOf(&apos;.&apos;)));
-    }</code></pre>
-      
-      <!-- reward -->
-      
-    </div>
-    
-    
-      <!-- copyright -->
-      
-    <footer class="article-footer">
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java/" rel="tag">java</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%BB%86%E8%8A%82/" rel="tag">细节</a></li></ul>
-
-
-    </footer>
-
-  </div>
-
-  
-
-  
-
-  
-
-</article>
-    
   </article>
   
 
+  
+  <nav class="page-nav">
+    
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">下一页</a>
+  </nav>
   
 </section>
 </div>
