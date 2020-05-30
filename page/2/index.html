@@ -70,6 +70,212 @@
     
     
     
+    <article id="post-合并k个有序链表" class="article article-type-post" itemscope
+  itemprop="blogPost" data-scroll-reveal>
+
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2020/04/29/%E5%90%88%E5%B9%B6k%E4%B8%AA%E6%9C%89%E5%BA%8F%E9%93%BE%E8%A1%A8/"
+    >合并k个有序链表</a
+  >
+</h2>
+  
+
+    </header>
+    
+
+    
+    <div class="article-meta">
+      <a href="/2020/04/29/%E5%90%88%E5%B9%B6k%E4%B8%AA%E6%9C%89%E5%BA%8F%E9%93%BE%E8%A1%A8/" class="article-date">
+  <time datetime="2020-04-29T14:34:46.000Z" itemprop="datePublished">2020-04-29</time>
+</a>
+      
+      
+      
+      
+    </div>
+    
+
+    
+
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+
+
+      
+
+      
+      <h4 id="合并k个长度为n的有序链表"><a href="#合并k个长度为n的有序链表" class="headerlink" title="合并k个长度为n的有序链表"></a>合并k个长度为n的有序链表</h4><h5 id="方法一"><a href="#方法一" class="headerlink" title="方法一"></a>方法一</h5><p>依次合并k个链表，时间复杂度：<code>O(k*k*n)</code></p>
+<h5 id="方法二"><a href="#方法二" class="headerlink" title="方法二"></a>方法二</h5><p>分治法</p>
+<h5 id="方法三"><a href="#方法三" class="headerlink" title="方法三"></a>方法三</h5><p>最小堆法</p>
+<p>维护一个大小为k的最小堆，每次取对顶元素加入到结果链表后面，并将将元素的下一个点加入到最小堆中，当堆为空时返回结果。</p>
+<p><strong>* 注意：kava中使用PriorityQueue实现最小堆的功能，默认是最小堆，若要实现最大堆需重载compare方法，可使用匿名函数<code>(o1,o2)-&gt;Integer.compare(o2,o1)</code>*</strong></p>
+
+      
+      <!-- reward -->
+      
+    </div>
+    
+    
+      <!-- copyright -->
+      
+    <footer class="article-footer">
+      
+      
+
+    </footer>
+
+  </div>
+
+  
+
+  
+
+  
+
+</article>
+    
+    <article id="post-全排列-回溯解法" class="article article-type-post" itemscope
+  itemprop="blogPost" data-scroll-reveal>
+
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2020/04/29/%E5%85%A8%E6%8E%92%E5%88%97-%E5%9B%9E%E6%BA%AF%E8%A7%A3%E6%B3%95/"
+    >全排列-回溯解法</a
+  >
+</h2>
+  
+
+    </header>
+    
+
+    
+    <div class="article-meta">
+      <a href="/2020/04/29/%E5%85%A8%E6%8E%92%E5%88%97-%E5%9B%9E%E6%BA%AF%E8%A7%A3%E6%B3%95/" class="article-date">
+  <time datetime="2020-04-29T14:12:00.000Z" itemprop="datePublished">2020-04-29</time>
+</a>
+      
+      
+      
+      
+    </div>
+    
+
+    
+
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+
+
+      
+
+      
+      <p>回溯个人感觉和dfs加visited数组差不多，</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Main</span></span>&#123;</span><br><span class="line">    List&lt;List&lt;Integer&gt;&gt; res = <span class="keyword">new</span> LinkedList&lt;&gt;();</span><br><span class="line">    <span class="keyword">public</span> List&lt;List&lt;Integer&gt;&gt; permute(<span class="keyword">int</span>[] nums)&#123;</span><br><span class="line">        LinkedList&lt;Integer&gt; track = <span class="keyword">new</span> LinkedList&lt;&gt;();</span><br><span class="line">        backTrack(track, nums);</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">backTrack</span><span class="params">(LinkedList&lt;Integer&gt; track, <span class="keyword">int</span>[] nums)</span></span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(track.size() == nums.length)&#123;</span><br><span class="line">            res.add(<span class="keyword">new</span> LinkedList(track));</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;nums.length; ++i)&#123;</span><br><span class="line">            <span class="keyword">if</span>(track.contains(nums[i])) <span class="keyword">continue</span>;</span><br><span class="line">            track.add(nums[i]);</span><br><span class="line">            backTrack(track, nums);</span><br><span class="line">            track.removeLast();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        Main m = <span class="keyword">new</span> Main();</span><br><span class="line">        m.test();</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test</span><span class="params">()</span></span>&#123;</span><br><span class="line">        permute(<span class="keyword">new</span> <span class="keyword">int</span>[]&#123;<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>&#125;);</span><br><span class="line">        <span class="keyword">for</span>(List&lt;Integer&gt; list : res)&#123;</span><br><span class="line">            <span class="keyword">for</span>(Integer v : list)&#123;</span><br><span class="line">                System.out.print(v+<span class="string">" "</span>);</span><br><span class="line">            &#125;</span><br><span class="line">            System.out.println();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+      
+      <!-- reward -->
+      
+    </div>
+    
+    
+      <!-- copyright -->
+      
+    <footer class="article-footer">
+      
+      
+
+    </footer>
+
+  </div>
+
+  
+
+  
+
+  
+
+</article>
+    
+    <article id="post-HTTPS证书加密过程" class="article article-type-post" itemscope
+  itemprop="blogPost" data-scroll-reveal>
+
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2020/02/29/HTTPS%E8%AF%81%E4%B9%A6%E5%8A%A0%E5%AF%86%E8%BF%87%E7%A8%8B/"
+    >客户端如何校验证书有效性？</a
+  >
+</h2>
+  
+
+    </header>
+    
+
+    
+    <div class="article-meta">
+      <a href="/2020/02/29/HTTPS%E8%AF%81%E4%B9%A6%E5%8A%A0%E5%AF%86%E8%BF%87%E7%A8%8B/" class="article-date">
+  <time datetime="2020-02-29T10:30:00.000Z" itemprop="datePublished">2020-02-29</time>
+</a>
+      
+      
+      
+      
+    </div>
+    
+
+    
+
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+
+
+      
+
+      
+      <p>用证书的公钥去解密证书的签名并将其与证书的MD5摘要进行对比查看是否一致</p>
+<h2 id="HTTPS工作原理"><a href="#HTTPS工作原理" class="headerlink" title="HTTPS工作原理"></a>HTTPS工作原理</h2><ol>
+<li>首先HTTP请求服务端生成证书，客户端对证书的有效期、合法性、域名是否与请求的域名一致、证书的公钥（RSA加密）等进行校验；   </li>
+<li>客户端如果校验通过后，就根据证书的公钥的有效， 生成随机数，随机数使用公钥进行加密（RSA加密）；  </li>
+<li>消息体产生的后，对它的摘要进行MD5（或者SHA1）算法加密，此时就得到了RSA签名；  </li>
+<li>发送给服务端，此时只有服务端（RSA私钥）能解密。  </li>
+<li>解密得到的随机数，再用AES加密，作为密钥（此时的密钥只有客户端和服务端知道）。<br>偷个图<br><img src="https://pic.downk.cc/item/5e5a3f1a6127cc07134dfeeb.jpg" alt=""></li>
+</ol>
+
+      
+      <!-- reward -->
+      
+    </div>
+    
+    
+      <!-- copyright -->
+      
+    <footer class="article-footer">
+      
+      
+
+    </footer>
+
+  </div>
+
+  
+
+  
+
+  
+
+</article>
+    
     <article id="post-HTTPS加密" class="article article-type-post" itemscope
   itemprop="blogPost" data-scroll-reveal>
 

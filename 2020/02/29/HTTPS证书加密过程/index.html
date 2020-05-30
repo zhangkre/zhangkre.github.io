@@ -59,7 +59,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-quill-pen-line"></i>
             <span class="post-meta-item-text"> 字数统计:</span>
-            <span class="post-count">219字</span>
+            <span class="post-count">215字</span>
         </span>
     </span>
 
@@ -96,15 +96,13 @@
 
       
       <p>用证书的公钥去解密证书的签名并将其与证书的MD5摘要进行对比查看是否一致</p>
-<h2 id="HTTPS工作原理"><a href="#HTTPS工作原理" class="headerlink" title="HTTPS工作原理"></a>HTTPS工作原理</h2><pre><code>1. 首先HTTP请求服务端生成证书，客户端对证书的有效期、合法性、域名是否与请求的域名一致、证书的公钥（RSA加密）等进行校验；
-
-2. 客户端如果校验通过后，就根据证书的公钥的有效， 生成随机数，随机数使用公钥进行加密（RSA加密）；
-
-3. 消息体产生的后，对它的摘要进行MD5（或者SHA1）算法加密，此时就得到了RSA签名；
-
-4. 发送给服务端，此时只有服务端（RSA私钥）能解密。
-
-5. 解密得到的随机数，再用AES加密，作为密钥（此时的密钥只有客户端和服务端知道）。</code></pre><p>偷个图<br><img src="https://pic.downk.cc/item/5e5a3f1a6127cc07134dfeeb.jpg" alt=""></p>
+<h2 id="HTTPS工作原理"><a href="#HTTPS工作原理" class="headerlink" title="HTTPS工作原理"></a>HTTPS工作原理</h2><ol>
+<li>首先HTTP请求服务端生成证书，客户端对证书的有效期、合法性、域名是否与请求的域名一致、证书的公钥（RSA加密）等进行校验；   </li>
+<li>客户端如果校验通过后，就根据证书的公钥的有效， 生成随机数，随机数使用公钥进行加密（RSA加密）；  </li>
+<li>消息体产生的后，对它的摘要进行MD5（或者SHA1）算法加密，此时就得到了RSA签名；  </li>
+<li>发送给服务端，此时只有服务端（RSA私钥）能解密。  </li>
+<li>解密得到的随机数，再用AES加密，作为密钥（此时的密钥只有客户端和服务端知道）。<br>偷个图<br><img src="https://pic.downk.cc/item/5e5a3f1a6127cc07134dfeeb.jpg" alt=""></li>
+</ol>
 
       
       <!-- reward -->

@@ -6,7 +6,7 @@
     
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
   <title>
-    最大正方形 |  Silhouettes
+    从上往下打印二叉树 |  Silhouettes
   </title>
   <meta name="generator" content="hexo-theme-yilia-plus">
   
@@ -31,7 +31,7 @@
   <div id="app">
     <main class="content">
       <section class="outer">
-  <article id="post-最大正方形" class="article article-type-post" itemscope
+  <article id="post-从上往下打印二叉树" class="article article-type-post" itemscope
   itemprop="blogPost" data-scroll-reveal>
 
   <div class="article-inner">
@@ -39,7 +39,7 @@
     <header class="article-header">
        
 <h1 class="article-title sea-center" style="border-left:0" itemprop="name">
-  最大正方形
+  从上往下打印二叉树
 </h1>
   
 
@@ -48,8 +48,8 @@
 
     
     <div class="article-meta">
-      <a href="/2020/05/09/%E6%9C%80%E5%A4%A7%E6%AD%A3%E6%96%B9%E5%BD%A2/" class="article-date">
-  <time datetime="2020-05-09T15:54:33.000Z" itemprop="datePublished">2020-05-09</time>
+      <a href="/2020/05/30/%E4%BB%8E%E4%B8%8A%E5%BE%80%E4%B8%8B%E6%89%93%E5%8D%B0%E4%BA%8C%E5%8F%89%E6%A0%91/" class="article-date">
+  <time datetime="2020-05-30T14:49:36.000Z" itemprop="datePublished">2020-05-30</time>
 </a>
       
       
@@ -59,7 +59,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-quill-pen-line"></i>
             <span class="post-meta-item-text"> 字数统计:</span>
-            <span class="post-count">722字</span>
+            <span class="post-count">241字</span>
         </span>
     </span>
 
@@ -68,7 +68,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-book-open-line"></i>
             <span class="post-meta-item-text"> 阅读时长≈</span>
-            <span class="post-count">3分钟</span>
+            <span class="post-count">1分钟</span>
         </span>
     </span>
 </div>
@@ -93,16 +93,37 @@
       
 
       
-      <p><strong>题目</strong><br>在一个由 0 和 1 组成的二维矩阵内，找到只包含 1 的最大正方形，并返回其面积。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">示例:</span><br><span class="line">输入: </span><br><span class="line">1 0 1 0 0  </span><br><span class="line">1 0 1 1 1  </span><br><span class="line">1 1 1 1 1  </span><br><span class="line">1 0 0 1 0  </span><br><span class="line">输出: 4</span><br></pre></td></tr></table></figure>
+      <p><strong>题目</strong><br>从上往下打印出二叉树的每个节点，同层节点从左至右打印。</p>
+<p><strong>思路</strong><br>bfs遍历二叉树可按层序遍历节点，为了识别出每一层在队列中的位置，用一个变量<code>count</code>来计数，<code>count</code>保存的是该层的节点数。</p>
+<p><strong>代码</strong>  </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.ArrayList;</span><br><span class="line"><span class="keyword">import</span> java.util.Queue;</span><br><span class="line"><span class="keyword">import</span> java.util.LinkedList;</span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">public class TreeNode &#123;</span></span><br><span class="line"><span class="comment">    int val = 0;</span></span><br><span class="line"><span class="comment">    TreeNode left = null;</span></span><br><span class="line"><span class="comment">    TreeNode right = null;</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">    public TreeNode(int val) &#123;</span></span><br><span class="line"><span class="comment">        this.val = val;</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">    &#125;</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">&#125;*/</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> ArrayList&lt;Integer&gt; <span class="title">PrintFromTopToBottom</span><span class="params">(TreeNode root)</span> </span>&#123;</span><br><span class="line">        ArrayList&lt;Integer&gt; res = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">        <span class="keyword">if</span>(root == <span class="keyword">null</span>) <span class="keyword">return</span> res;</span><br><span class="line">        Queue&lt;TreeNode&gt; q = <span class="keyword">new</span> LinkedList&lt;&gt;();</span><br><span class="line">        q.offer(root);</span><br><span class="line">        <span class="keyword">int</span> count = <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">while</span>(!q.isEmpty())&#123;</span><br><span class="line">           <span class="keyword">int</span> size = count;</span><br><span class="line">           count = <span class="number">0</span>;</span><br><span class="line">           <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;size; ++i)&#123;</span><br><span class="line">                TreeNode node = q.poll();</span><br><span class="line">                res.add(node.val);</span><br><span class="line">                <span class="keyword">if</span>(node.left != <span class="keyword">null</span>) &#123;</span><br><span class="line">                    q.offer(node.left);</span><br><span class="line">                    count++;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">if</span>(node.right != <span class="keyword">null</span>)&#123;</span><br><span class="line">                    q.offer(node.right);</span><br><span class="line">                    count++;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p><strong>方法1：</strong><br><strong>暴力法</strong><br>遍历这个矩阵，通过矩阵的长宽和当前遍历的位置计算出最长的遍历边长，以当前点为正方形的左上点，遍历不同边长的正方形是否全为1,从全为1的正方形中找出最大的边长，边长的平方就是答案。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">allOne</span><span class="params">(<span class="keyword">char</span>[][] matrix, <span class="keyword">int</span> x, <span class="keyword">int</span> y, <span class="keyword">int</span> n)</span></span>&#123;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=x; i&lt;=x+n; ++i)&#123;</span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> j=y; j&lt;=y+n; ++j)&#123;</span><br><span class="line">                <span class="keyword">if</span>(matrix[i][j] == <span class="string">'0'</span>) <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">maximalSquare</span><span class="params">(<span class="keyword">char</span>[][] matrix)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(matrix == <span class="keyword">null</span> || matrix.length==<span class="number">0</span>) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">int</span> maxArea = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">int</span> height = matrix.length;</span><br><span class="line">        <span class="keyword">int</span> width = matrix[<span class="number">0</span>].length;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;height; ++i)&#123;</span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">0</span>; j&lt;width; ++j)&#123;</span><br><span class="line">                <span class="keyword">int</span> n = Math.min(width-j, height-i)-<span class="number">1</span>;</span><br><span class="line">                <span class="comment">// System.out.println(n);</span></span><br><span class="line">                <span class="keyword">for</span>(<span class="keyword">int</span> k=<span class="number">0</span>; k&lt;=n; ++k)&#123;</span><br><span class="line">                    <span class="keyword">int</span> area=<span class="number">0</span>;</span><br><span class="line">                    <span class="comment">// System.out.println(k);</span></span><br><span class="line">                    <span class="keyword">if</span>(allOne(matrix, i, j, k))&#123;</span><br><span class="line">                        area = (k+<span class="number">1</span>) * (k+<span class="number">1</span>);</span><br><span class="line">                    &#125;</span><br><span class="line">                    maxArea = Math.max(maxArea, area);</span><br><span class="line">                    <span class="comment">// System.out.println(maxArea);</span></span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> maxArea;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>知识点</strong><br>java中对queue的操作有两种:  </p>
+<table>
+<thead>
+<tr>
+<th align="center">操作</th>
+<th align="center">Throws exception</th>
+<th align="center">Returns special value</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center"><strong>Insert</strong></td>
+<td align="center">add(e)</td>
+<td align="center">offer(e)</td>
+</tr>
+<tr>
+<td align="center"><strong>Remove</strong></td>
+<td align="center">remove()</td>
+<td align="center">poll()</td>
+</tr>
+<tr>
+<td align="center"><strong>Examine</strong></td>
+<td align="center">element()</td>
+<td align="center">peek()</td>
+</tr>
+</tbody></table>
 
-<p>** 方法2 **<br><strong>dp法</strong>  </p>
-<p>定义dp[i][j]为以i,j为右下点构成的正方形的最大边长， 最终从所有的dp中找出最大的边长就是符合题目的正方形的边长。<br><img src="https://pic.downk.cc/item/5eb6d5a4c2a9a83be55ccdb2.jpg" alt=""><br>动态规划最重要的第二点就是如何递推，这里首先观察dp[i][j], 由于dp[i][j]定义的是以i,j为右下点的正方形，因此只考虑右上的dp与dp[i][j]的关系，显然，如果dp[i-][j], dp[i][j-1], dp[i-1][j-1]中有一个为0的话那么dp[i][j]构成的最大正方形的边长只能是1，如果dp[i-][j], dp[i][j-1], dp[i-1][j-1]都不为0的胡，也就是它们都大于等于1的话才有可能构成边长大于1的正方形，构成的正方形的边长为min(dp[i-][j], dp[i][j-1], dp[i-1][j-1])+1。</p>
-<p>考虑到边界时, dp[0][0] 对应的左边，上边，左上也应该要有dp， 所以把dp的大小定义为原来matrix的大小+1，dp[i][j]对应的是matrix[i-1][j-1]。<br><img src="https://pic.downk.cc/item/5eb6d635c2a9a83be55dcb47.jpg" alt=""></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">maximalSquare</span><span class="params">(<span class="keyword">char</span>[][] matrix)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(matrix == <span class="keyword">null</span> || matrix.length == <span class="number">0</span>) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">int</span> h = matrix.length;</span><br><span class="line">        <span class="keyword">int</span> w = matrix[<span class="number">0</span>].length;</span><br><span class="line">        <span class="keyword">int</span>[][] dp = <span class="keyword">new</span> <span class="keyword">int</span>[h+<span class="number">1</span>][w+<span class="number">1</span>];</span><br><span class="line">        <span class="keyword">int</span> res = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>; i&lt;h+<span class="number">1</span>; ++i)&#123;</span><br><span class="line">            <span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">1</span>; j&lt;w+<span class="number">1</span>; ++j)&#123;</span><br><span class="line">                <span class="keyword">if</span>(matrix[i-<span class="number">1</span>][j-<span class="number">1</span>] == <span class="string">'1'</span>)&#123;</span><br><span class="line">                    <span class="keyword">if</span>((dp[i-<span class="number">1</span>][j] != <span class="number">0</span>) &amp;&amp; (dp[i][j-<span class="number">1</span>] != <span class="number">0</span>) &amp;&amp; (dp[i-<span class="number">1</span>][j-<span class="number">1</span>] != <span class="number">0</span>))&#123;</span><br><span class="line">                        dp[i][j] = Math.min(dp[i-<span class="number">1</span>][j-<span class="number">1</span>], Math.min(dp[i-<span class="number">1</span>][j], dp[i][j-<span class="number">1</span>])) + <span class="number">1</span>;</span><br><span class="line">                    &#125;</span><br><span class="line">                    <span class="keyword">else</span>&#123;</span><br><span class="line">                        dp[i][j] = <span class="number">1</span>;</span><br><span class="line">                    &#125;</span><br><span class="line">                    System.out.println(dp[i][j]);</span><br><span class="line">                    res = Math.max(res, dp[i][j]);</span><br><span class="line">                &#125;</span><br><span class="line">                </span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> res*res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
       
       <!-- reward -->
       
@@ -167,7 +188,7 @@
     <a class="modal-close" href="javascript:;"><i class="ri-close-circle-line"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://zhangkre.github.io/2020/05/09/%E6%9C%80%E5%A4%A7%E6%AD%A3%E6%96%B9%E5%BD%A2/" alt="微信分享二维码">
+      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://zhangkre.github.io/2020/05/30/%E4%BB%8E%E4%B8%8A%E5%BE%80%E4%B8%8B%E6%89%93%E5%8D%B0%E4%BA%8C%E5%8F%89%E6%A0%91/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -183,19 +204,19 @@
   
   <nav class="article-nav">
     
-      <a href="/2020/05/17/%E9%87%8D%E5%BB%BA%E4%BA%8C%E5%8F%89%E6%A0%91/" class="article-nav-link">
+      <a href="/2020/05/30/%E4%BA%8C%E5%8F%89%E6%90%9C%E7%B4%A2%E6%A0%91%E7%9A%84%E5%90%8E%E5%BA%8F%E9%81%8D%E5%8E%86%E5%BA%8F%E5%88%97/" class="article-nav-link">
         <strong class="article-nav-caption">上一篇</strong>
         <div class="article-nav-title">
           
-            重建二叉树
+            二叉搜索树的后序遍历序列
           
         </div>
       </a>
     
     
-      <a href="/2020/04/30/%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E5%8F%B3%E8%A7%86%E5%9B%BE/" class="article-nav-link">
+      <a href="/2020/05/30/%E6%A0%88%E7%9A%84%E5%8E%8B%E5%85%A5%E3%80%81%E5%BC%B9%E5%87%BA%E5%BA%8F%E5%88%97/" class="article-nav-link">
         <strong class="article-nav-caption">下一篇</strong>
-        <div class="article-nav-title">二叉树的右视图</div>
+        <div class="article-nav-title">栈的压入、弹出序列</div>
       </a>
     
   </nav>
