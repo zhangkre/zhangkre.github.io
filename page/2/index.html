@@ -70,6 +70,71 @@
     
     
     
+    <article id="post-快乐数" class="article article-type-post" itemscope
+  itemprop="blogPost" data-scroll-reveal>
+
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2020/04/30/%E5%BF%AB%E4%B9%90%E6%95%B0/"
+    >快乐数</a
+  >
+</h2>
+  
+
+    </header>
+    
+
+    
+    <div class="article-meta">
+      <a href="/2020/04/30/%E5%BF%AB%E4%B9%90%E6%95%B0/" class="article-date">
+  <time datetime="2020-04-29T17:36:31.000Z" itemprop="datePublished">2020-04-30</time>
+</a>
+      
+      
+      
+      
+    </div>
+    
+
+    
+
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+
+
+      
+
+      
+      <h3 id="题目："><a href="#题目：" class="headerlink" title="题目："></a>题目：</h3><p><strong>编写一个算法来判断一个数 n 是不是快乐数。<br>「快乐数」定义为：对于一个正整数，每一次将该数替换为它每个位置上的数字的平方和，然后重复这个过程直到这个数变为 1，也可能是 无限循环 但始终变不到 1。如果 可以变为  1，那么这个数就是快乐数。<br>如果 n 是快乐数就返回 True ；不是，则返回 False 。</strong></p>
+<h3 id="思路：-检测重复使用hashset"><a href="#思路：-检测重复使用hashset" class="headerlink" title="思路： 检测重复使用hashset"></a>思路： 检测重复使用hashset</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">isHappy</span><span class="params">(<span class="keyword">int</span> n)</span> </span>&#123;</span><br><span class="line">        HashSet&lt;Integer&gt; myset = <span class="keyword">new</span> HashSet&lt;&gt;();</span><br><span class="line">        myset.add(n);</span><br><span class="line">        <span class="keyword">while</span>(n!=<span class="number">1</span>)&#123;</span><br><span class="line">            <span class="comment">// System.out.println(n);</span></span><br><span class="line">            n = next(n);</span><br><span class="line">            <span class="keyword">if</span>(myset.contains(n))&#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            myset.add(n);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">next</span><span class="params">(<span class="keyword">int</span> n)</span></span>&#123;</span><br><span class="line">        <span class="keyword">int</span> res=<span class="number">0</span>;</span><br><span class="line">        <span class="keyword">while</span>(n!=<span class="number">0</span>)&#123;</span><br><span class="line">            res += (n%<span class="number">10</span>)*(n%<span class="number">10</span>);</span><br><span class="line">            n = n/<span class="number">10</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+      
+      <!-- reward -->
+      
+    </div>
+    
+    
+      <!-- copyright -->
+      
+    <footer class="article-footer">
+      
+      
+
+    </footer>
+
+  </div>
+
+  
+
+  
+
+  
+
+</article>
+    
     <article id="post-合并k个有序链表" class="article article-type-post" itemscope
   itemprop="blogPost" data-scroll-reveal>
 
