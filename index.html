@@ -70,6 +70,74 @@
     
     
     
+    <article id="post-高频面试题" class="article article-type-post" itemscope
+  itemprop="blogPost" data-scroll-reveal>
+
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2020/06/10/%E9%AB%98%E9%A2%91%E9%9D%A2%E8%AF%95%E9%A2%98/"
+    >高频面试题</a
+  >
+</h2>
+  
+
+    </header>
+    
+
+    
+    <div class="article-meta">
+      <a href="/2020/06/10/%E9%AB%98%E9%A2%91%E9%9D%A2%E8%AF%95%E9%A2%98/" class="article-date">
+  <time datetime="2020-06-10T10:42:13.000Z" itemprop="datePublished">2020-06-10</time>
+</a>
+      
+      
+      
+      
+    </div>
+    
+
+    
+
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+
+
+      
+
+      
+      <ol>
+<li>线程和进程的区别？<br>　　<strong>进程是资源（CPU、内存等）分配的基本单位</strong>，具有一定独立功能的程序关于某个数据集合上的一次运行活动，进程是系统进行资源分配和调度的一个独立单位。<br>　　<strong>线程是进程的一个实体，是独立运行和独立调度的基本单位（CPU上真正运行的是线程）</strong>。线程自己基本上不拥有系统资源，只拥有一点在运行中必不可少的资源(如程序计数器,一组寄存器和栈)，但是它可与同属一个进程的其他的线程共享进程所拥有的全部资源。</li>
+<li>TCP三次握手和四次挥手？</li>
+</ol>
+
+      
+      <!-- reward -->
+      
+    </div>
+    
+    
+      <!-- copyright -->
+      
+    <footer class="article-footer">
+      
+      
+
+    </footer>
+
+  </div>
+
+  
+
+  
+
+  
+
+</article>
+    
     <article id="post-JAVA-CLASS文件结构" class="article article-type-post" itemscope
   itemprop="blogPost" data-scroll-reveal>
 
@@ -111,7 +179,7 @@
       
       <p><strong>javac</strong> 全称是 <code>java complier</code><br><strong>javap</strong> 是<code>java</code>反解析工具，可以将<code>class</code>字节码文件，反解析出当前类对应的<code>code</code>区、本地变量表、异常表和代码行偏移量映射表、常量池等信息<br>javap 一般用法：javap -v -c -l<br>-l 会输出行号和本地变量表信息<br>-c 会对当前<code>class</code>字节码进行反编译生成汇编代码<br>-v 不仅会输出行号、本地变量表、反编译汇编码，还会输出当前类用到的常量池等信息  </p>
 <p>使用jclasslib可以可视化class结构<br><img src="https://pic.downk.cc/item/5ede665cc2a9a83be54fb6bf.jpg" alt=""><br>使用网上的工具Classpy也能可视化查看class字节码<br><img src="https://pic.downk.cc/item/5ede66bfc2a9a83be5505cc4.jpg" alt=""><br>和这个对应<br><img src="https://pic.downk.cc/item/5ede66ecc2a9a83be550a91f.jpg" alt=""></p>
-<p>*tips: * java -jar xxxx.jar  可在命令行运行jar文件,会阻塞命令行；<br>javaw运行java文件不会阻塞命令行</p>
+<p><em>tips:</em>  java -jar xxxx.jar  可在命令行运行jar文件,会阻塞命令行；<br>javaw运行java文件不会阻塞命令行</p>
 
       
       <!-- reward -->
@@ -722,73 +790,6 @@
 <p>这样子，就能保证每次从stack2中pop出来的元素就是最老的元素了。</p>
 <p><strong>代码</strong>  </p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.Stack;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    Stack&lt;Integer&gt; stack1 = <span class="keyword">new</span> Stack&lt;Integer&gt;();</span><br><span class="line">    Stack&lt;Integer&gt; stack2 = <span class="keyword">new</span> Stack&lt;Integer&gt;();</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">push</span><span class="params">(<span class="keyword">int</span> node)</span> </span>&#123;</span><br><span class="line">        stack1.push(node);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">pop</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span>( stack2.isEmpty() )&#123;</span><br><span class="line">            <span class="keyword">while</span>( !stack1.isEmpty() )&#123;</span><br><span class="line">                stack2.push( stack1.pop() );</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> stack2.pop();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-      
-      <!-- reward -->
-      
-    </div>
-    
-    
-      <!-- copyright -->
-      
-    <footer class="article-footer">
-      
-      
-
-    </footer>
-
-  </div>
-
-  
-
-  
-
-  
-
-</article>
-    
-    <article id="post-重建二叉树" class="article article-type-post" itemscope
-  itemprop="blogPost" data-scroll-reveal>
-
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2020/05/17/%E9%87%8D%E5%BB%BA%E4%BA%8C%E5%8F%89%E6%A0%91/"
-    >重建二叉树</a
-  >
-</h2>
-  
-
-    </header>
-    
-
-    
-    <div class="article-meta">
-      <a href="/2020/05/17/%E9%87%8D%E5%BB%BA%E4%BA%8C%E5%8F%89%E6%A0%91/" class="article-date">
-  <time datetime="2020-05-17T13:18:55.000Z" itemprop="datePublished">2020-05-17</time>
-</a>
-      
-      
-      
-      
-    </div>
-    
-
-    
-
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-
-
-      
-
-      
-      <p><strong>题目描述</strong><br>输入某二叉树的前序遍历和中序遍历的结果，请重建出该二叉树。假设输入的前序遍历和中序遍历的结果中都不含重复的数字。例如输入前序遍历序列{1,2,4,7,3,5,6,8}和中序遍历序列{4,7,2,1,5,3,8,6}，则重建二叉树并返回。</p>
-<p>贴一张盗的图<br><img src="https://pic.downk.cc/item/5ec13a07c2a9a83be56aea65.jpg" alt=""></p>
-<p><strong>代码</strong>  </p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Definition for binary tree</span></span><br><span class="line"><span class="comment"> * public class TreeNode &#123;</span></span><br><span class="line"><span class="comment"> *     int val;</span></span><br><span class="line"><span class="comment"> *     TreeNode left;</span></span><br><span class="line"><span class="comment"> *     TreeNode right;</span></span><br><span class="line"><span class="comment"> *     TreeNode(int x) &#123; val = x; &#125;</span></span><br><span class="line"><span class="comment"> * &#125;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> TreeNode <span class="title">reConstructBinaryTree</span><span class="params">(<span class="keyword">int</span> [] pre,<span class="keyword">int</span> [] in)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> reConstructBinaryTree(pre, <span class="number">0</span>, in, <span class="number">0</span>, in.length-<span class="number">1</span>);</span><br><span class="line">    &#125;</span><br><span class="line"><span class="comment">//	pre &#123;1,2,4,7,3,5,6,8&#125;</span></span><br><span class="line"><span class="comment">//	in  &#123;4,7,2,1,5,3,8,6&#125;</span></span><br><span class="line">	</span><br><span class="line">    <span class="function"><span class="keyword">private</span> TreeNode <span class="title">reConstructBinaryTree</span><span class="params">(<span class="keyword">int</span> [] pre, <span class="keyword">int</span> preIdx, <span class="keyword">int</span>[] in, <span class="keyword">int</span> inL, <span class="keyword">int</span> inR)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">if</span>( (preIdx &gt;= pre.length) || (inL &gt; inR) ) <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">        <span class="keyword">int</span> rootVal = pre[preIdx];</span><br><span class="line">        TreeNode root = <span class="keyword">new</span> TreeNode(rootVal);</span><br><span class="line">        <span class="keyword">int</span> i=<span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span>(i = inL; i &lt;= inR; i++)&#123;</span><br><span class="line">            <span class="keyword">if</span>(rootVal == in[i])&#123;</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        root.left = reConstructBinaryTree(pre, preIdx+<span class="number">1</span>, in, inL, i-<span class="number">1</span>);</span><br><span class="line">        root.right = reConstructBinaryTree(pre, preIdx+(i-inL+<span class="number">1</span>), in, i+<span class="number">1</span>, inR);</span><br><span class="line">        <span class="keyword">return</span> root;</span><br><span class="line">    &#125; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
       
       <!-- reward -->
       

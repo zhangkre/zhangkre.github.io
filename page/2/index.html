@@ -70,6 +70,73 @@
     
     
     
+    <article id="post-重建二叉树" class="article article-type-post" itemscope
+  itemprop="blogPost" data-scroll-reveal>
+
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2020/05/17/%E9%87%8D%E5%BB%BA%E4%BA%8C%E5%8F%89%E6%A0%91/"
+    >重建二叉树</a
+  >
+</h2>
+  
+
+    </header>
+    
+
+    
+    <div class="article-meta">
+      <a href="/2020/05/17/%E9%87%8D%E5%BB%BA%E4%BA%8C%E5%8F%89%E6%A0%91/" class="article-date">
+  <time datetime="2020-05-17T13:18:55.000Z" itemprop="datePublished">2020-05-17</time>
+</a>
+      
+      
+      
+      
+    </div>
+    
+
+    
+
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+
+
+      
+
+      
+      <p><strong>题目描述</strong><br>输入某二叉树的前序遍历和中序遍历的结果，请重建出该二叉树。假设输入的前序遍历和中序遍历的结果中都不含重复的数字。例如输入前序遍历序列{1,2,4,7,3,5,6,8}和中序遍历序列{4,7,2,1,5,3,8,6}，则重建二叉树并返回。</p>
+<p>贴一张盗的图<br><img src="https://pic.downk.cc/item/5ec13a07c2a9a83be56aea65.jpg" alt=""></p>
+<p><strong>代码</strong>  </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Definition for binary tree</span></span><br><span class="line"><span class="comment"> * public class TreeNode &#123;</span></span><br><span class="line"><span class="comment"> *     int val;</span></span><br><span class="line"><span class="comment"> *     TreeNode left;</span></span><br><span class="line"><span class="comment"> *     TreeNode right;</span></span><br><span class="line"><span class="comment"> *     TreeNode(int x) &#123; val = x; &#125;</span></span><br><span class="line"><span class="comment"> * &#125;</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> TreeNode <span class="title">reConstructBinaryTree</span><span class="params">(<span class="keyword">int</span> [] pre,<span class="keyword">int</span> [] in)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> reConstructBinaryTree(pre, <span class="number">0</span>, in, <span class="number">0</span>, in.length-<span class="number">1</span>);</span><br><span class="line">    &#125;</span><br><span class="line"><span class="comment">//	pre &#123;1,2,4,7,3,5,6,8&#125;</span></span><br><span class="line"><span class="comment">//	in  &#123;4,7,2,1,5,3,8,6&#125;</span></span><br><span class="line">	</span><br><span class="line">    <span class="function"><span class="keyword">private</span> TreeNode <span class="title">reConstructBinaryTree</span><span class="params">(<span class="keyword">int</span> [] pre, <span class="keyword">int</span> preIdx, <span class="keyword">int</span>[] in, <span class="keyword">int</span> inL, <span class="keyword">int</span> inR)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">if</span>( (preIdx &gt;= pre.length) || (inL &gt; inR) ) <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">        <span class="keyword">int</span> rootVal = pre[preIdx];</span><br><span class="line">        TreeNode root = <span class="keyword">new</span> TreeNode(rootVal);</span><br><span class="line">        <span class="keyword">int</span> i=<span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span>(i = inL; i &lt;= inR; i++)&#123;</span><br><span class="line">            <span class="keyword">if</span>(rootVal == in[i])&#123;</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        root.left = reConstructBinaryTree(pre, preIdx+<span class="number">1</span>, in, inL, i-<span class="number">1</span>);</span><br><span class="line">        root.right = reConstructBinaryTree(pre, preIdx+(i-inL+<span class="number">1</span>), in, i+<span class="number">1</span>, inR);</span><br><span class="line">        <span class="keyword">return</span> root;</span><br><span class="line">    &#125; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+      
+      <!-- reward -->
+      
+    </div>
+    
+    
+      <!-- copyright -->
+      
+    <footer class="article-footer">
+      
+      
+
+    </footer>
+
+  </div>
+
+  
+
+  
+
+  
+
+</article>
+    
     <article id="post-最大正方形" class="article article-type-post" itemscope
   itemprop="blogPost" data-scroll-reveal>
 
