@@ -70,6 +70,324 @@
     
     
     
+    <article id="post-可靠传输的实现机制" class="article article-type-post" itemscope
+  itemprop="blogPost" data-scroll-reveal>
+
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2020/07/10/%E5%8F%AF%E9%9D%A0%E4%BC%A0%E8%BE%93%E7%9A%84%E5%AE%9E%E7%8E%B0%E6%9C%BA%E5%88%B6/"
+    >可靠传输的实现机制</a
+  >
+</h2>
+  
+
+    </header>
+    
+
+    
+    <div class="article-meta">
+      <a href="/2020/07/10/%E5%8F%AF%E9%9D%A0%E4%BC%A0%E8%BE%93%E7%9A%84%E5%AE%9E%E7%8E%B0%E6%9C%BA%E5%88%B6/" class="article-date">
+  <time datetime="2020-07-09T16:03:00.000Z" itemprop="datePublished">2020-07-10</time>
+</a>
+      
+      
+      
+      
+    </div>
+    
+
+    
+
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+
+
+      
+
+      
+      <h2 id="可靠传输的实现机制"><a href="#可靠传输的实现机制" class="headerlink" title="可靠传输的实现机制"></a>可靠传输的实现机制</h2><ul>
+<li>停止等待协议（SW）</li>
+<li>后退N帧协议（GBN）</li>
+<li>选择重传协议（SR）</li>
+</ul>
+<hr>
+<h3 id="1-停止等待协议（SW）"><a href="#1-停止等待协议（SW）" class="headerlink" title="1. 停止等待协议（SW）"></a>1. 停止等待协议（SW）</h3><p>要点：<br>    - 每发送一个数据就停止发送，等待对方的确认<br>    - 收到确认后再发送下一个数据帧</p>
+<p><img src="https://pic.downk.cc/item/5f07420114195aa5949240d5.jpg" alt=""><br><img src="https://pic.downk.cc/item/5f07440014195aa59492dac8.jpg" alt=""></p>
+<hr>
+<h3 id="2-后退N帧协议（GBN）"><a href="#2-后退N帧协议（GBN）" class="headerlink" title="2. 后退N帧协议（GBN）"></a>2. 后退N帧协议（GBN）</h3><p><em>要点:</em></p>
+<ul>
+<li><strong>后退N帧协议是基于滑动窗口流量控制技术的。</strong><ul>
+<li>发送方的发送窗口尺寸W_T必须满足：1 &lt; W_T &lt; 2^n - 1 其中，n是构成帧序号的比特数量；  <ul>
+<li>若 W_T=1: 停止等待协议</li>
+<li>若 W_T &gt; 2^n - 1: 造成接收方无法分辨新、旧数据帧的问题</li>
+</ul>
+</li>
+<li>接收方的接收窗口尺寸W_R必须满足： W_R=1 因此，接收方只能按顺序接收数据帧</li>
+</ul>
+</li>
+<li><strong>发送方可在未收到接收方确认帧的情况下，将序号落在发送窗口内的多个数据帧全部发送出去</strong></li>
+<li><strong>接收方只接收序号落在接收窗口内且无误码的数据帧，并且将接收窗口向前滑动一个位置，与此同时给发送方发回相应的确认帧。为了减小开销，</strong> <ul>
+<li><em>接收方不一定每收到一个按序到达且无误码的数据帧就给发送方发回一个确认帧，而是可以在连续收到好几个按序到达且无误码的数据帧后，才针对最后一个数据帧发送确认帧，这称为</em> <strong>累计确认</strong></li>
+<li><em>或者可以在自己有数据帧要发送的时候才对之前按序到达且无误码的数据帧进行</em> <strong>捎带确认</strong> </li>
+</ul>
+</li>
+<li><strong>发送方只有在收到对已发送数据帧的确认时，发送窗口才能向前相应滑动</strong></li>
+<li><strong>发送方发送窗口内某个已发送的数据帧产生超时重发时，其后续在发送窗口内且已发送的数据帧也必须全部重传，这就是后退N帧协议名称的由来</strong></li>
+</ul>
+<hr>
+
+      
+      <!-- reward -->
+      
+    </div>
+    
+    
+      <!-- copyright -->
+      
+    <footer class="article-footer">
+      
+      
+
+    </footer>
+
+  </div>
+
+  
+
+  
+
+  
+
+</article>
+    
+    <article id="post-JAVA集合类" class="article article-type-post" itemscope
+  itemprop="blogPost" data-scroll-reveal>
+
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2020/07/09/JAVA%E9%9B%86%E5%90%88%E7%B1%BB/"
+    >JAVA集合类</a
+  >
+</h2>
+  
+
+    </header>
+    
+
+    
+    <div class="article-meta">
+      <a href="/2020/07/09/JAVA%E9%9B%86%E5%90%88%E7%B1%BB/" class="article-date">
+  <time datetime="2020-07-09T15:29:44.000Z" itemprop="datePublished">2020-07-09</time>
+</a>
+      
+      
+      
+      
+    </div>
+    
+
+    
+
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+
+
+      
+
+      
+      
+      
+      <!-- reward -->
+      
+    </div>
+    
+    
+      <!-- copyright -->
+      
+    <footer class="article-footer">
+      
+      
+
+    </footer>
+
+  </div>
+
+  
+
+  
+
+  
+
+</article>
+    
+    <article id="post-数据链路层的三个问题" class="article article-type-post" itemscope
+  itemprop="blogPost" data-scroll-reveal>
+
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2020/07/09/%E6%95%B0%E6%8D%AE%E9%93%BE%E8%B7%AF%E5%B1%82%E7%9A%84%E4%B8%89%E4%B8%AA%E9%97%AE%E9%A2%98/"
+    >数据链路层的三个问题</a
+  >
+</h2>
+  
+
+    </header>
+    
+
+    
+    <div class="article-meta">
+      <a href="/2020/07/09/%E6%95%B0%E6%8D%AE%E9%93%BE%E8%B7%AF%E5%B1%82%E7%9A%84%E4%B8%89%E4%B8%AA%E9%97%AE%E9%A2%98/" class="article-date">
+  <time datetime="2020-07-09T15:02:28.000Z" itemprop="datePublished">2020-07-09</time>
+</a>
+      
+      
+      
+      
+    </div>
+    
+
+    
+
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+
+
+      
+
+      
+      <p><strong>数据链路层三个问题：封装成帧、透明传输、差错检查</strong>  </p>
+<hr>
+<p><strong>点对点信道的数据链路层在进行通信的时步骤如下：</strong><br><em>1. 节点A的数据链路层把网络层交下来的IP数据报添加首部和尾部封装成帧。</em></p>
+<p><em>2. 节点A把封装好的帧发送给节点B的数据链路层。</em></p>
+<p><em>3. 若节点B的数据链路层收到的帧无差错，则从收到的帧当中提取出IP数据报上交给上面的网络层，否则丢弃这个帧。</em></p>
+<hr>
+<h2 id="1-封装成帧"><a href="#1-封装成帧" class="headerlink" title="1. 封装成帧"></a>1. 封装成帧</h2><p><strong>封装成帧就是在一段数据的前后分别加上帧头和帧尾；</strong><br>    - 帧首部 SOH<br>    - 数据部分<br>      - 帧头 6 + 6 + 2<br>      - 帧尾 4<br>      - 数据 46-1500<br>    - 帧尾部 EOT<br><img src="https://pic.downk.cc/item/5f07337014195aa5948d532b.jpg" alt=""></p>
+<hr>
+<h2 id="2-透明传输"><a href="#2-透明传输" class="headerlink" title="2. 透明传输"></a>2. 透明传输</h2><p><strong>如果数据中的某个字节的二进制代码恰好和 SOH 或 EOT 一样，数据链路层就会错误地“找到帧的边界”。</strong><br><img src="https://pic.downk.cc/item/5f07370414195aa5948e84c5.png" alt=""><br><img src="https://pic.downk.cc/item/5f07374714195aa5948e9c9c.png" alt=""></p>
+<hr>
+<h2 id="3-差错检测"><a href="#3-差错检测" class="headerlink" title="3. 差错检测"></a>3. 差错检测</h2><p><strong>在传输过程中可能会产生比特差错：1 可能会变成 0 而 0 也可能变成 1。</strong><br>在数据链路层传送的帧中，广泛使用了循环冗余检验 CRC 的检错技术。</p>
+
+      
+      <!-- reward -->
+      
+    </div>
+    
+    
+      <!-- copyright -->
+      
+    <footer class="article-footer">
+      
+      
+
+    </footer>
+
+  </div>
+
+  
+
+  
+
+  
+
+</article>
+    
+    <article id="post-二叉搜索树" class="article article-type-post" itemscope
+  itemprop="blogPost" data-scroll-reveal>
+
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2020/07/03/%E4%BA%8C%E5%8F%89%E6%90%9C%E7%B4%A2%E6%A0%91/"
+    >二叉搜索树</a
+  >
+</h2>
+  
+
+    </header>
+    
+
+    
+    <div class="article-meta">
+      <a href="/2020/07/03/%E4%BA%8C%E5%8F%89%E6%90%9C%E7%B4%A2%E6%A0%91/" class="article-date">
+  <time datetime="2020-07-03T13:36:00.000Z" itemprop="datePublished">2020-07-03</time>
+</a>
+      
+      
+      
+      
+    </div>
+    
+
+    
+
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+
+
+      
+
+      
+      <h2 id="二叉搜索树-BST"><a href="#二叉搜索树-BST" class="headerlink" title="二叉搜索树(BST)"></a>二叉搜索树(BST)</h2><p>二叉搜索树的结构有两种可能：</p>
+<ul>
+<li>空树</li>
+<li>左子节点的值小于根节点，右子节点的值大于根节点  </li>
+</ul>
+<p>** 基本操作 **</p>
+<ol>
+<li>查找  </li>
+<li>插入</li>
+<li>删除</li>
+</ol>
+<hr>
+<ol>
+<li>查找  </li>
+</ol>
+<ul>
+<li>遍历二叉树，如果当前遍历的节点为空，则以为着没有目标结点，直接返回</li>
+<li>若当前遍历的结点的值正好和目标值相等，则查找成功，返回</li>
+<li>若当前遍历的结点的值大于目标值，则应该在该结点的左子树进行查找，设置下一步遍历范围为root.left，继续递归遍历</li>
+<li>若当前遍历的结点的值小于目标值，则应该在该结点的右子树进行查找，设置下一步遍历范围为root.right，继续递归遍历</li>
+</ul>
+
+      
+      <!-- reward -->
+      
+    </div>
+    
+    
+      <!-- copyright -->
+      
+    <footer class="article-footer">
+      
+      
+
+    </footer>
+
+  </div>
+
+  
+
+  
+
+  
+
+</article>
+    
     <article id="post-高频面试题" class="article article-type-post" itemscope
   itemprop="blogPost" data-scroll-reveal>
 
@@ -543,284 +861,13 @@
 
 </article>
     
-    <article id="post-栈的压入、弹出序列" class="article article-type-post" itemscope
-  itemprop="blogPost" data-scroll-reveal>
-
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2020/05/30/%E6%A0%88%E7%9A%84%E5%8E%8B%E5%85%A5%E3%80%81%E5%BC%B9%E5%87%BA%E5%BA%8F%E5%88%97/"
-    >栈的压入、弹出序列</a
-  >
-</h2>
-  
-
-    </header>
-    
-
-    
-    <div class="article-meta">
-      <a href="/2020/05/30/%E6%A0%88%E7%9A%84%E5%8E%8B%E5%85%A5%E3%80%81%E5%BC%B9%E5%87%BA%E5%BA%8F%E5%88%97/" class="article-date">
-  <time datetime="2020-05-30T14:22:34.000Z" itemprop="datePublished">2020-05-30</time>
-</a>
-      
-      
-      
-      
-    </div>
-    
-
-    
-
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-
-
-      
-
-      
-      <p><strong>题目</strong><br>输入两个整数序列，第一个序列表示栈的压入顺序，请判断第二个序列是否可能为该栈的弹出顺序。假设压入栈的所有数字均不相等。例如序列1,2,3,4,5是某栈的压入顺序，序列4,5,3,2,1是该压栈序列对应的一个弹出序列，但4,3,5,1,2就不可能是该压栈序列的弹出序列。（注意：这两个序列的长度是相等的）  </p>
-<p><strong>思路</strong><br>用一个栈来模拟题目描述的操作，每次圧栈后判断栈顶元素是否和popA[idx]相等，相等的话就idx++, 并S.pop(), 不相等的话继续圧栈。如果popA是pushA对应的出栈顺序的话，最后S必定为空，若不是的话S不为空。所以最后返回S.isEmpty()即可。</p>
-<p><strong>代码</strong>  </p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.Stack;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">IsPopOrder</span><span class="params">(<span class="keyword">int</span> [] pushA,<span class="keyword">int</span> [] popA)</span> </span>&#123;</span><br><span class="line">        Stack&lt;Integer&gt; S = <span class="keyword">new</span> Stack&lt;&gt;();</span><br><span class="line">        <span class="keyword">int</span> idx = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;pushA.length; ++i)&#123;</span><br><span class="line">            S.push(pushA[i]);</span><br><span class="line">            <span class="keyword">while</span>(idx &lt; popA.length &amp;&amp; popA[idx] == S.peek())&#123;</span><br><span class="line">                S.pop();</span><br><span class="line">                idx++;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> S.isEmpty();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-      
-      <!-- reward -->
-      
-    </div>
-    
-    
-      <!-- copyright -->
-      
-    <footer class="article-footer">
-      
-      
-
-    </footer>
-
-  </div>
-
-  
-
-  
-
-  
-
-</article>
-    
-    <article id="post-包含min函数的栈" class="article article-type-post" itemscope
-  itemprop="blogPost" data-scroll-reveal>
-
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2020/05/30/%E5%8C%85%E5%90%ABmin%E5%87%BD%E6%95%B0%E7%9A%84%E6%A0%88/"
-    >包含min函数的栈</a
-  >
-</h2>
-  
-
-    </header>
-    
-
-    
-    <div class="article-meta">
-      <a href="/2020/05/30/%E5%8C%85%E5%90%ABmin%E5%87%BD%E6%95%B0%E7%9A%84%E6%A0%88/" class="article-date">
-  <time datetime="2020-05-29T16:30:33.000Z" itemprop="datePublished">2020-05-30</time>
-</a>
-      
-      
-      
-      
-    </div>
-    
-
-    
-
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-
-
-      
-
-      
-      <p><strong>题目</strong><br>定义栈的数据结构，请在该类型中实现一个能够得到栈中所含最小元素的min函数（时间复杂度应为O（1））。<br>注意：保证测试中不会当栈为空的时候，对栈调用pop()或者min()或者top()方法。</p>
-<p><strong>思路</strong><br>定义一个最小值栈，当push进来的元素小于minS栈顶元素是就把该元素压进栈， 当pop出的元素等于minS栈顶元素时就把minS栈顶元素出栈</p>
-<p><strong>代码</strong>  </p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.Stack;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    Stack&lt;Integer&gt; S = <span class="keyword">new</span> Stack&lt;&gt;();</span><br><span class="line">    Stack&lt;Integer&gt; minS = <span class="keyword">new</span> Stack&lt;&gt;();</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">push</span><span class="params">(<span class="keyword">int</span> node)</span> </span>&#123;</span><br><span class="line">        S.push(node);</span><br><span class="line">        <span class="keyword">if</span>(minS.isEmpty())&#123;</span><br><span class="line">            minS.push(node);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span>&#123;</span><br><span class="line">            <span class="keyword">if</span>(node &lt; minS.peek())&#123;</span><br><span class="line">                minS.push(node);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">pop</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> v = S.pop();</span><br><span class="line">        <span class="keyword">if</span>(v == minS.peek())&#123;</span><br><span class="line">            minS.pop();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">top</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> S.peek();</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">min</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> minS.peek();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-      
-      <!-- reward -->
-      
-    </div>
-    
-    
-      <!-- copyright -->
-      
-    <footer class="article-footer">
-      
-      
-
-    </footer>
-
-  </div>
-
-  
-
-  
-
-  
-
-</article>
-    
-    <article id="post-树的子结构" class="article article-type-post" itemscope
-  itemprop="blogPost" data-scroll-reveal>
-
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2020/05/29/%E6%A0%91%E7%9A%84%E5%AD%90%E7%BB%93%E6%9E%84/"
-    >树的子结构</a
-  >
-</h2>
-  
-
-    </header>
-    
-
-    
-    <div class="article-meta">
-      <a href="/2020/05/29/%E6%A0%91%E7%9A%84%E5%AD%90%E7%BB%93%E6%9E%84/" class="article-date">
-  <time datetime="2020-05-29T15:37:25.000Z" itemprop="datePublished">2020-05-29</time>
-</a>
-      
-      
-      
-      
-    </div>
-    
-
-    
-
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-
-
-      
-
-      
-      <p><strong>题目</strong><br>输入两棵二叉树A，B，判断B是不是A的子结构。（ps：我们约定空树不是任意一个树的子结构）</p>
-<p><strong>思路</strong><br>递归遍历这棵树， 判断<code>root1.val == root2.val</code>, 若相等的话再判断以<code>root1.left</code>根的树是否完全包含<code>root2</code>以及以<code>root1.right</code>根的树是否完全包含<code>root2</code>,如包含的话就返回<code>true</code>;否则的话再递归判断    <code>root1.left</code>与<code>root2</code> 以及<code>root1.right与root2</code></p>
-<p><strong>代码</strong>  </p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">HasSubtree</span><span class="params">(TreeNode root1,TreeNode root2)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(root1 == <span class="keyword">null</span> || root2 == <span class="keyword">null</span>) <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">        <span class="keyword">if</span>(root1.val == root2.val &amp;&amp; isSub(root1.left, root2.left) &amp;&amp; isSub(root1.right, root2.right))&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span>&#123;</span><br><span class="line">            <span class="keyword">return</span> HasSubtree(root1.left, root2) || HasSubtree(root1.right, root2);</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">    &#125;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">isSub</span><span class="params">(TreeNode root1, TreeNode root2)</span></span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(root2 == <span class="keyword">null</span>) <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">        <span class="keyword">if</span>(root1 == <span class="keyword">null</span>) <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">        <span class="keyword">if</span>(root1.val != root2.val) <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">        <span class="keyword">return</span> isSub(root1.left, root2.left) &amp;&amp; isSub(root1.right, root2.right);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-      
-      <!-- reward -->
-      
-    </div>
-    
-    
-      <!-- copyright -->
-      
-    <footer class="article-footer">
-      
-      
-
-    </footer>
-
-  </div>
-
-  
-
-  
-
-  
-
-</article>
-    
-    <article id="post-两个栈实现队列" class="article article-type-post" itemscope
-  itemprop="blogPost" data-scroll-reveal>
-
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2020/05/17/%E4%B8%A4%E4%B8%AA%E6%A0%88%E5%AE%9E%E7%8E%B0%E9%98%9F%E5%88%97/"
-    >两个栈实现队列</a
-  >
-</h2>
-  
-
-    </header>
-    
-
-    
-    <div class="article-meta">
-      <a href="/2020/05/17/%E4%B8%A4%E4%B8%AA%E6%A0%88%E5%AE%9E%E7%8E%B0%E9%98%9F%E5%88%97/" class="article-date">
-  <time datetime="2020-05-17T13:27:51.000Z" itemprop="datePublished">2020-05-17</time>
-</a>
-      
-      
-      
-      
-    </div>
-    
-
-    
-
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-
-
-      
-
-      
-      <p><strong>题目描述</strong><br>用两个栈来实现一个队列，完成队列的Push和Pop操作。 队列中的元素为int类型。</p>
-<p><strong>思路</strong><br>朴素的想法： stack1用来存元素，每次push新元素进stack1， 队列pop的时候先将stack1的所有元素pop, 并push进stack2, res = stack2.pop(), 接着再将stack2中所有的元素pop，并push进stack1。</p>
-<p>正解: 队列是先进先出，栈是先进后出，如何用两个栈来实现这种先进先出呢？<br>其实很简单，我们假设用stack1专门来装元素，那么直接stack1.pop肯定是不行的，这个时候stack2就要发挥作用了。</p>
-<p>我们的规则是：只要stack2中有元素就pop，如果stack2为空，则将stack1中所有元素倒进satck2中，就是说，新元素只进stack1，元素出来只从stack2出来。</p>
-<p>这样子，就能保证每次从stack2中pop出来的元素就是最老的元素了。</p>
-<p><strong>代码</strong>  </p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.Stack;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    Stack&lt;Integer&gt; stack1 = <span class="keyword">new</span> Stack&lt;Integer&gt;();</span><br><span class="line">    Stack&lt;Integer&gt; stack2 = <span class="keyword">new</span> Stack&lt;Integer&gt;();</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">push</span><span class="params">(<span class="keyword">int</span> node)</span> </span>&#123;</span><br><span class="line">        stack1.push(node);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">pop</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span>( stack2.isEmpty() )&#123;</span><br><span class="line">            <span class="keyword">while</span>( !stack1.isEmpty() )&#123;</span><br><span class="line">                stack2.push( stack1.pop() );</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> stack2.pop();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-      
-      <!-- reward -->
-      
-    </div>
-    
-    
-      <!-- copyright -->
-      
-    <footer class="article-footer">
-      
-      
-
-    </footer>
-
-  </div>
-
-  
-
-  
-
-  
-
-</article>
-    
   </article>
   
 
   
   <nav class="page-nav">
     
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">下一页</a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/">下一页</a>
   </nav>
   
 </section>
