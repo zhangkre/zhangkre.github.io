@@ -70,6 +70,365 @@
     
     
     
+    <article id="post-java类的生命周期" class="article article-type-post" itemscope
+  itemprop="blogPost" data-scroll-reveal>
+
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2020/07/18/java%E7%B1%BB%E7%9A%84%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F/"
+    >java类的生命周期</a
+  >
+</h2>
+  
+
+    </header>
+    
+
+    
+    <div class="article-meta">
+      <a href="/2020/07/18/java%E7%B1%BB%E7%9A%84%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F/" class="article-date">
+  <time datetime="2020-07-18T10:06:52.000Z" itemprop="datePublished">2020-07-18</time>
+</a>
+      
+      
+      
+      
+    </div>
+    
+
+    
+
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+
+
+      
+
+      
+      <p><img src="https://pic.downk.cc/item/5f12c9b714195aa5947108bb.jpg" alt=""></p>
+<hr>
+<h1 id="加载"><a href="#加载" class="headerlink" title="加载"></a>加载</h1><h2 id="加载的过程"><a href="#加载的过程" class="headerlink" title="加载的过程"></a>加载的过程</h2><p>“加载”是“类加载”过程的一个阶段，不能混淆这两个名词。在加载阶段，虚拟机需要完成 3 件事：  </p>
+<ul>
+<li>通过类的全限定名获取该类的二进制字节流。</li>
+<li>将二进制字节流所代表的静态结构转化为方法区的运行时数据结构。</li>
+<li>在内存中创建一个代表该类的 java.lang.Class 对象，作为方法区这个类的各种数据的访问入口。</li>
+</ul>
+<h3 id="获取二进制字节流"><a href="#获取二进制字节流" class="headerlink" title="获取二进制字节流"></a>获取二进制字节流</h3><p>对于 Class 文件，虚拟机没有指明要从哪里获取、怎样获取。除了直接从编译好的 .class 文件中读取，还有以下几种方式： </p>
+<ul>
+<li>从 zip 包中读取，如 jar、war等</li>
+<li>从网络中获取，如 Applet</li>
+<li>通过动态代理技术生成代理类的二进制字节流</li>
+<li>由 JSP 文件生成对应的 Class 类</li>
+<li>从数据库中读取，如 有些中间件服务器可以选择把程序安装到数据库中来完成程序代码在集群间的分发。</li>
+</ul>
+<h3 id="非数组类”与“数组类”加载比较"><a href="#非数组类”与“数组类”加载比较" class="headerlink" title="非数组类”与“数组类”加载比较"></a>非数组类”与“数组类”加载比较</h3><ul>
+<li>非数组类加载阶段可以使用系统提供的引导类加载器，也可以由用户自定义的类加载器完成，开发人员可以通过定义自己的类加载器控制字节流的获取方式（如重写一个类加载器的 loadClass() 方法）</li>
+<li>数组类本身不通过类加载器创建，它是由 Java 虚拟机直接创建的，再由类加载器创建数组中的元素类。</li>
+</ul>
+<h3 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h3><ul>
+<li>虚拟机规范未规定 Class 对象的存储位置，对于 HotSpot 虚拟机而言，Class 对象比较特殊，它虽然是对象，但存放在方法区中。</li>
+<li>加载阶段与连接阶段的部分内容交叉进行，加载阶段尚未完成，连接阶段可能已经开始了。但这两个阶段的开始时间仍然保持着固定的先后顺序。</li>
+</ul>
+<hr>
+<h1 id="验证"><a href="#验证" class="headerlink" title="验证"></a>验证</h1><p>验证阶段确保 Class 文件的字节流中包含的信息符合当前虚拟机的要求，并且不会危害虚拟机自身的安全。  </p>
+<h2 id="验证的过程"><a href="#验证的过程" class="headerlink" title="验证的过程"></a>验证的过程</h2><ul>
+<li>文件格式验证：验证字节流是否符合 Class 文件格式的规范，并且能被当前版本的虚拟机处理，验证点如下：<ul>
+<li>是否以魔数 0XCAFEBABE 开头</li>
+<li>主次版本号是否在当前虚拟机处理范围内</li>
+<li>常量池是否有不被支持的常量类型</li>
+<li>指向常量的索引值是否指向了不存在的常量</li>
+<li>CONSTANT_Utf8_info 型的常量是否有不符合 UTF8 编码的数据</li>
+<li>……</li>
+</ul>
+</li>
+<li>元数据验证：对字节码描述信息进行语义分析，确保其符合 Java 语法规范。</li>
+<li>字节码验证：本阶段是验证过程中最复杂的一个阶段，是对方法体进行语义分析，保证方法在运行时不会出现危害虚拟机的事件。</li>
+<li>符号引用验证：本阶段发生在解析阶段，确保解析正常执行。</li>
+</ul>
+<hr>
+<h1 id="准备"><a href="#准备" class="headerlink" title="准备"></a>准备</h1><p>准备阶段是正式为<strong>类变量（或称“静态成员变量”）</strong>分配内存并设置初始值的阶段。这些变量（不包括实例变量）所使用的内存都在<strong>方法区</strong>中进行分配。</p>
+<p>初始值“通常情况下”是数据类型的零值<code>（0, null...）</code>，假设一个类变量的定义为：  </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> value = <span class="number">123</span>;</span><br></pre></td></tr></table></figure>
+<p>那么变量 <code>value</code> 在准备阶段过后的初始值为 <code>0</code>而不是 <code>123</code>，因为这时候尚未开始执行任何 Java 方法。</p>
+<p>存在“特殊情况”：如果类字段的字段属性表中存在 ConstantValue 属性，即<strong>final</strong>修饰的变量，那么在准备阶段 value 就会被初始化为 ConstantValue 属性所指定的值，假设上面类变量 value 的定义变为：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> value = <span class="number">123</span>;</span><br></pre></td></tr></table></figure>
+<p>那么在准备阶段虚拟机会根据<code>ConstantValue</code> 的设置将 <code>value</code> 赋值为 <code>123</code>。</p>
+<hr>
+<h1 id="解析"><a href="#解析" class="headerlink" title="解析"></a>解析</h1><p>一句话，解析阶段是虚拟机将常量池内的符号引用替换为直接引用的过程。</p>
+<hr>
+<h1 id="初始化"><a href="#初始化" class="headerlink" title="初始化"></a>初始化</h1><p>类初始化阶段是类加载过程的最后一步，是执行类构造器 <code>&lt;clinit&gt;()</code> 方法的过程。</p>
+<p><code>&lt;clinit&gt;()</code> 方法是由编译器自动收集类中的所有类变量的赋值动作和静态语句块（<code>static {}</code> 块）中的语句合并产生的，编译器收集的顺序是由语句在源文件中出现的顺序所决定的。</p>
+<p>静态语句块中只能访问定义在静态语句块之前的变量，定义在它之后的变量，在前面的静态语句块中可以赋值，但不能访问。如下方代码所示：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Test</span> </span>&#123;</span><br><span class="line">    <span class="keyword">static</span> &#123;</span><br><span class="line">        i = <span class="number">0</span>;  <span class="comment">// 给变量赋值可以正常编译通过</span></span><br><span class="line">        System.out.println(i);  <span class="comment">// 这句编译器会提示“非法向前引用”</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">int</span> i = <span class="number">1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>&lt;clinit&gt;()</code>方法不需要显式调用父类构造器，虚拟机会保证在子类的 <code>&lt;clinit&gt;()</code> 方法执行之前，父类的 <code>&lt;clinit&gt;()</code> 方法已经执行完毕。<br>由于父类的<code>&lt;clinit&gt;()</code>方法先执行，意味着父类中定义的静态语句块要优先于子类的变量赋值操作。如下方代码所示：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">Parent</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> A = <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">static</span> &#123;</span><br><span class="line">        A = <span class="number">2</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">Sub</span> <span class="keyword">extends</span> <span class="title">Parent</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> B = A;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">    System.out.println(Sub.B); <span class="comment">// 输出 2</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>&lt;clinit&gt;()</code>方法不是必需的，如果一个类没有静态语句块，也没有对类变量的赋值操作，那么编译器可以不为这个类生成 <code>&lt;clinit&gt;()</code> 方法。</p>
+<p>接口中不能使用静态代码块，但接口也需要通过<code>&lt;clinit&gt;()</code>方法为接口中定义的静态成员变量显式初始化。但接口与类不同，接口的 <code>&lt;clinit&gt;()</code> 方法不需要先执行父类的<code>&lt;clinit&gt;()</code> 方法，只有当父接口中定义的变量使用时，父接口才会初始化。</p>
+<p>虚拟机会保证一个类的<code>&lt;clinit&gt;()</code>方法在多线程环境中被正确加锁、同步。如果多个线程同时去初始化一个类，那么只会有一个线程去执行这个类的 <code>&lt;clinit&gt;()</code> 方法。</p>
+
+      
+      <!-- reward -->
+      
+    </div>
+    
+    
+      <!-- copyright -->
+      
+    <footer class="article-footer">
+      
+      
+
+    </footer>
+
+  </div>
+
+  
+
+  
+
+  
+
+</article>
+    
+    <article id="post-init和cinit的区别" class="article article-type-post" itemscope
+  itemprop="blogPost" data-scroll-reveal>
+
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2020/07/18/init%E5%92%8Ccinit%E7%9A%84%E5%8C%BA%E5%88%AB/"
+    >init和clinit的区别</a
+  >
+</h2>
+  
+
+    </header>
+    
+
+    
+    <div class="article-meta">
+      <a href="/2020/07/18/init%E5%92%8Ccinit%E7%9A%84%E5%8C%BA%E5%88%AB/" class="article-date">
+  <time datetime="2020-07-18T09:57:09.000Z" itemprop="datePublished">2020-07-18</time>
+</a>
+      
+      
+      
+      
+    </div>
+    
+
+    
+
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+
+
+      
+
+      
+      <h4 id="init和clinit的区别"><a href="#init和clinit的区别" class="headerlink" title="init和clinit的区别"></a>init和clinit的区别</h4><ol>
+<li>执行的目的不同<ul>
+<li>init是对象的构造器方法，对<strong>非静态</strong>变量解析初始化</li>
+<li>clinit是class类构造器，对静态变量、静态代码块进行初始化</li>
+</ul>
+</li>
+<li>执行时机不同<ul>
+<li>init是在程序执行new一个对象时调用该对象的constructor方法时才会执行init方法</li>
+<li>clinit是在jvm进行类<strong>加载–验证–解析–初始化</strong>时的<strong>初始化</strong>阶段会调用clinit方法</li>
+</ul>
+</li>
+</ol>
+
+      
+      <!-- reward -->
+      
+    </div>
+    
+    
+      <!-- copyright -->
+      
+    <footer class="article-footer">
+      
+      
+
+    </footer>
+
+  </div>
+
+  
+
+  
+
+  
+
+</article>
+    
+    <article id="post-java常量池" class="article article-type-post" itemscope
+  itemprop="blogPost" data-scroll-reveal>
+
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2020/07/18/java%E5%B8%B8%E9%87%8F%E6%B1%A0/"
+    >java常量池</a
+  >
+</h2>
+  
+
+    </header>
+    
+
+    
+    <div class="article-meta">
+      <a href="/2020/07/18/java%E5%B8%B8%E9%87%8F%E6%B1%A0/" class="article-date">
+  <time datetime="2020-07-18T09:14:02.000Z" itemprop="datePublished">2020-07-18</time>
+</a>
+      
+      
+      
+      
+    </div>
+    
+
+    
+
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+
+
+      
+
+      
+      <ul>
+<li>常量池<br>class文件中的用来存放编译器生成的各种字面量和符号引用</li>
+<li>运行时常量池<br>方法区中的运行常量池。类加载器加载class文件的时候会将上述的class文件中的常量池加载到<strong>运行时常量池</strong></li>
+<li>字符串常量池<br>用来存放字符串。字符串常量池在堆中</li>
+</ul>
+
+      
+      <!-- reward -->
+      
+    </div>
+    
+    
+      <!-- copyright -->
+      
+    <footer class="article-footer">
+      
+      
+
+    </footer>
+
+  </div>
+
+  
+
+  
+
+  
+
+</article>
+    
+    <article id="post-jvm内存分布" class="article article-type-post" itemscope
+  itemprop="blogPost" data-scroll-reveal>
+
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h2 itemprop="name">
+  <a class="article-title" href="/2020/07/17/jvm%E5%86%85%E5%AD%98%E5%88%86%E5%B8%83/"
+    >jvm内存分布</a
+  >
+</h2>
+  
+
+    </header>
+    
+
+    
+    <div class="article-meta">
+      <a href="/2020/07/17/jvm%E5%86%85%E5%AD%98%E5%88%86%E5%B8%83/" class="article-date">
+  <time datetime="2020-07-17T14:11:25.000Z" itemprop="datePublished">2020-07-17</time>
+</a>
+      
+      
+      
+      
+    </div>
+    
+
+    
+
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+
+
+      
+
+      
+      <h3 id="1-虚拟机的构成"><a href="#1-虚拟机的构成" class="headerlink" title="1. 虚拟机的构成"></a>1. 虚拟机的构成</h3><p>虚拟机主要由 运行时数据区、 执行引擎、 类加载器 三者构成。<br><img src="https://pic.downk.cc/item/5f11b18914195aa5941ef94a.png" alt="">  </p>
+<h5 id="1-1-运行时数据区"><a href="#1-1-运行时数据区" class="headerlink" title="1.1 运行时数据区"></a>1.1 运行时数据区</h5><p><img src="https://pic.downk.cc/item/5f11b28114195aa5941f3f1a.png" alt=""></p>
+<ul>
+<li>方法区<br><img src="https://pic.downk.cc/item/5f11b30414195aa5941f6a79.png" alt=""></li>
+</ul>
+<p>方法区存放着class文件的信息，还包括存储class常量的常量池<br>常量池主要用来存放两大类常量：<strong>字面量</strong>和<strong>符号引用量</strong></p>
+<hr>
+<ul>
+<li>字面量<ul>
+<li>文本字符串</li>
+<li>final常量</li>
+</ul>
+</li>
+<li>符号引用量<ul>
+<li>类和接口的全限定名</li>
+<li>字段名称和描述符</li>
+<li>方法名称和描述符  </li>
+</ul>
+</li>
+</ul>
+<hr>
+<ul>
+<li>class文件中的常量池中的内容会在类加载后进入方法区的运行时常量池。相对于常量池，运行时常量池的重要特征是具有动态性，java并不要求常量只有在编译器才会产生，运行期间也可以将新的常量存放入池中，这种特性用的最多的String类中的intern()方法。  </li>
+<li>对于byte、short、long、char、boolean对应的包装器类都有对应的常量池，这五种包装器类默认创建在<strong>-128到127</strong>的对象会存放在在缓存中。对于<strong>两种浮点数没有</strong>实现常量池技术。</li>
+</ul>
+<p><img src="https://pic.downk.cc/item/5f11ddf414195aa594307213.png" alt=""></p>
+
+      
+      <!-- reward -->
+      
+    </div>
+    
+    
+      <!-- copyright -->
+      
+    <footer class="article-footer">
+      
+      
+
+    </footer>
+
+  </div>
+
+  
+
+  
+
+  
+
+</article>
+    
     <article id="post-可靠传输的实现机制" class="article article-type-post" itemscope
   itemprop="blogPost" data-scroll-reveal>
 
@@ -498,344 +857,6 @@
       <p><strong>javac</strong> 全称是 <code>java complier</code><br><strong>javap</strong> 是<code>java</code>反解析工具，可以将<code>class</code>字节码文件，反解析出当前类对应的<code>code</code>区、本地变量表、异常表和代码行偏移量映射表、常量池等信息<br>javap 一般用法：javap -v -c -l<br>-l 会输出行号和本地变量表信息<br>-c 会对当前<code>class</code>字节码进行反编译生成汇编代码<br>-v 不仅会输出行号、本地变量表、反编译汇编码，还会输出当前类用到的常量池等信息  </p>
 <p>使用jclasslib可以可视化class结构<br><img src="https://pic.downk.cc/item/5ede665cc2a9a83be54fb6bf.jpg" alt=""><br>使用网上的工具Classpy也能可视化查看class字节码<br><img src="https://pic.downk.cc/item/5ede66bfc2a9a83be5505cc4.jpg" alt=""><br>和这个对应<br><img src="https://pic.downk.cc/item/5ede66ecc2a9a83be550a91f.jpg" alt=""></p>
 <p><em>tips:</em>  java -jar xxxx.jar  可在命令行运行jar文件,会阻塞命令行；<br>javaw运行java文件不会阻塞命令行</p>
-
-      
-      <!-- reward -->
-      
-    </div>
-    
-    
-      <!-- copyright -->
-      
-    <footer class="article-footer">
-      
-      
-
-    </footer>
-
-  </div>
-
-  
-
-  
-
-  
-
-</article>
-    
-    <article id="post-vivo2021提前批笔试题" class="article article-type-post" itemscope
-  itemprop="blogPost" data-scroll-reveal>
-
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2020/06/07/vivo2021%E6%8F%90%E5%89%8D%E6%89%B9%E7%AC%94%E8%AF%95%E9%A2%98/"
-    >vivo2021提前批笔试题</a
-  >
-</h2>
-  
-
-    </header>
-    
-
-    
-    <div class="article-meta">
-      <a href="/2020/06/07/vivo2021%E6%8F%90%E5%89%8D%E6%89%B9%E7%AC%94%E8%AF%95%E9%A2%98/" class="article-date">
-  <time datetime="2020-06-07T14:23:00.000Z" itemprop="datePublished">2020-06-07</time>
-</a>
-      
-      
-      
-      
-    </div>
-    
-
-    
-
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-
-
-      
-
-      
-      <p><strong>全是leetcode原题</strong><br>1.<strong>605.种花问题</strong><br><strong>假设你有一个很长的花坛，一部分地块种植了花，另一部分却没有。可是，花卉不能种植在相邻的地块上，它们会争夺水源，两者都会死去。<br>给定一个花坛（表示为一个数组包含0和1，其中0表示没种植花，1表示种植了花）返回在不打破种植规则的情况下能种入花的最大值。</strong></p>
-<table>
-<thead>
-<tr>
-<th>1</th>
-<th>0</th>
-<th>0</th>
-<th>0</th>
-<th>0</th>
-<th>0</th>
-<th>1</th>
-<th>0</th>
-<th>1</th>
-<th>0</th>
-<th>0</th>
-<th>0</th>
-<th>0</th>
-<th>1</th>
-<th>0</th>
-<th>0</th>
-<th>0</th>
-</tr>
-</thead>
-</table>
-<p>关键思路：能种花的位置的前中后三个位置一定是0，否则就不能种花！！<br><strong>代码</strong>  </p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">canPlaceFlowers</span><span class="params">(<span class="keyword">int</span>[] flowerbed, <span class="keyword">int</span> n)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> res = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;flowerbed.length; i++)&#123;</span><br><span class="line">            <span class="keyword">if</span>( flowerbed[i] == <span class="number">0</span> &amp;&amp; ((i-<span class="number">1</span>&lt;<span class="number">0</span>) || flowerbed[i-<span class="number">1</span>] == <span class="number">0</span>) &amp;&amp; ((i+<span class="number">1</span>&gt;=flowerbed.length) || flowerbed[i+<span class="number">1</span>]==<span class="number">0</span>))&#123;</span><br><span class="line">                flowerbed[i] = <span class="number">1</span>;</span><br><span class="line">                res++;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>2.<strong>887.鸡蛋掉落</strong><br><strong>你将获得 K 个鸡蛋，并可以使用一栋从 1 到 N  共有 N 层楼的建筑。<br>每个蛋的功能都是一样的，如果一个蛋碎了，你就不能再把它掉下去。<br>你知道存在楼层 F ，满足 0 &lt;= F &lt;= N 任何从高于 F 的楼层落下的鸡蛋都会碎，从 F 楼层或比它低的楼层落下的鸡蛋都不会破。<br>每次移动，你可以取一个鸡蛋（如果你有完整的鸡蛋）并把它从任一楼层 X 扔下（满足 1 &lt;= X &lt;= N）。<br>你的目标是确切地知道 F 的值是多少。<br>无论 F 的初始值如何，你确定 F 的值的最小移动次数是多少？</strong></p>
-<p>这题理解起来都费劲，之前见过，可是没记下来咋做的。  </p>
-
-      
-      <!-- reward -->
-      
-    </div>
-    
-    
-      <!-- copyright -->
-      
-    <footer class="article-footer">
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E7%AC%94%E8%AF%95%E9%A2%98/" rel="tag">笔试题</a></li></ul>
-
-
-    </footer>
-
-  </div>
-
-  
-
-  
-
-  
-
-</article>
-    
-    <article id="post-复杂链表的复制" class="article article-type-post" itemscope
-  itemprop="blogPost" data-scroll-reveal>
-
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2020/05/31/%E5%A4%8D%E6%9D%82%E9%93%BE%E8%A1%A8%E7%9A%84%E5%A4%8D%E5%88%B6/"
-    >复杂链表的复制</a
-  >
-</h2>
-  
-
-    </header>
-    
-
-    
-    <div class="article-meta">
-      <a href="/2020/05/31/%E5%A4%8D%E6%9D%82%E9%93%BE%E8%A1%A8%E7%9A%84%E5%A4%8D%E5%88%B6/" class="article-date">
-  <time datetime="2020-05-31T03:56:00.000Z" itemprop="datePublished">2020-05-31</time>
-</a>
-      
-  <div class="article-category">
-    <a class="article-category-link" href="/categories/%E5%89%91%E6%8C%87offer/">剑指offer</a>
-  </div>
-
-      
-      
-      
-    </div>
-    
-
-    
-
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-
-
-      
-
-      
-      <p><strong>题目</strong><br>输入一个复杂链表（每个节点中有节点值，以及两个指针，一个指向下一个节点，另一个特殊指针random指向一个随机节点），请对此链表进行深拷贝，并返回拷贝后的头结点。（注意，输出结果中请不要返回参数中的节点引用，否则判题程序会直接返回空）</p>
-<p><strong>思路</strong>  </p>
-<h5 id="1-HashMap"><a href="#1-HashMap" class="headerlink" title="1.HashMap"></a>1.HashMap</h5><p>用<code>HashMap&lt;RandomListNode, RandomListNode&gt;</code>来保存原有的节点和新建节点的对应关系。再遍历一遍原链表，利用<code>map</code>找出对应的<code>random</code>节点，更新新链表的<code>random</code>值。</p>
-<p><strong>代码</strong>  </p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">public class RandomListNode &#123;</span></span><br><span class="line"><span class="comment">    int label;</span></span><br><span class="line"><span class="comment">    RandomListNode next = null;</span></span><br><span class="line"><span class="comment">    RandomListNode random = null;</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">    RandomListNode(int label) &#123;</span></span><br><span class="line"><span class="comment">        this.label = label;</span></span><br><span class="line"><span class="comment">    &#125;</span></span><br><span class="line"><span class="comment">&#125;</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="keyword">import</span> java.util.*;</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> RandomListNode <span class="title">Clone</span><span class="params">(RandomListNode pHead)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(pHead == <span class="keyword">null</span>) <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">        HashMap&lt;RandomListNode, RandomListNode&gt; map = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line">        RandomListNode p = pHead;</span><br><span class="line">        map.put(<span class="keyword">null</span>, <span class="keyword">null</span>);</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">while</span>(p != <span class="keyword">null</span>)&#123;</span><br><span class="line">            RandomListNode temp = <span class="keyword">new</span> RandomListNode(p.label);</span><br><span class="line">            map.put(p, temp);</span><br><span class="line">            p = p.next;</span><br><span class="line">        &#125;</span><br><span class="line">        p = pHead;</span><br><span class="line">        <span class="keyword">while</span>(p != <span class="keyword">null</span>)&#123;</span><br><span class="line">            RandomListNode cur = map.get(p);</span><br><span class="line">            RandomListNode next = map.get(p.next);</span><br><span class="line">            RandomListNode random = map.get(p.random);</span><br><span class="line">            cur.next = next;</span><br><span class="line">            cur.random = random;</span><br><span class="line">            p = p.next;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> map.get(pHead);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h5 id="2-构造法"><a href="#2-构造法" class="headerlink" title="2.构造法"></a>2.构造法</h5><p><strong>思路</strong><br>分3步：<br>1.复制节点<br>2.添加random指向<br>3.拆分链表<br>在原有链表的每个节点后面构造label相等的新的节点，再遍历一遍链表，查询原节点的random指向，更新新节点的random, 最后拆分该链表。</p>
-<p><strong>代码</strong>  </p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">public class RandomListNode &#123;</span></span><br><span class="line"><span class="comment">    int label;</span></span><br><span class="line"><span class="comment">    RandomListNode next = null;</span></span><br><span class="line"><span class="comment">    RandomListNode random = null;</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">    RandomListNode(int label) &#123;</span></span><br><span class="line"><span class="comment">        this.label = label;</span></span><br><span class="line"><span class="comment">    &#125;</span></span><br><span class="line"><span class="comment">&#125;</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="keyword">import</span> java.util.*;</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> RandomListNode <span class="title">Clone</span><span class="params">(RandomListNode pHead)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(pHead == <span class="keyword">null</span>) <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">        RandomListNode p = pHead;</span><br><span class="line">        <span class="keyword">while</span>(p != <span class="keyword">null</span>)&#123;</span><br><span class="line">            RandomListNode temp = <span class="keyword">new</span> RandomListNode(p.label);</span><br><span class="line">            RandomListNode pNext = p.next;</span><br><span class="line">            temp.next = pNext;</span><br><span class="line">            p.next = temp;</span><br><span class="line">            p = pNext;</span><br><span class="line">        &#125;</span><br><span class="line">        p = pHead;</span><br><span class="line">        <span class="keyword">while</span>(p != <span class="keyword">null</span>)&#123;</span><br><span class="line">            <span class="keyword">if</span>(p.random != <span class="keyword">null</span>)&#123;</span><br><span class="line">                p.next.random = p.random.next;</span><br><span class="line">            &#125;</span><br><span class="line">            p = p.next.next;</span><br><span class="line">        &#125;</span><br><span class="line">        p = pHead;</span><br><span class="line">        RandomListNode newHead = pHead.next;</span><br><span class="line">        RandomListNode p1 = newHead;</span><br><span class="line">        <span class="keyword">while</span>(p != <span class="keyword">null</span>)&#123;</span><br><span class="line">            p.next = p.next.next;</span><br><span class="line">            p = p.next;</span><br><span class="line">            <span class="keyword">if</span>(p1.next != <span class="keyword">null</span>)</span><br><span class="line">            p1.next = p1.next.next;</span><br><span class="line">            p1 = p1.next;</span><br><span class="line">            </span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> newHead;</span><br><span class="line">        </span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-
-      
-      <!-- reward -->
-      
-    </div>
-    
-    
-      <!-- copyright -->
-      
-    <footer class="article-footer">
-      
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%88%B7%E9%A2%98/" rel="tag">刷题</a></li></ul>
-
-
-    </footer>
-
-  </div>
-
-  
-
-  
-
-  
-
-</article>
-    
-    <article id="post-二叉搜索树的后序遍历序列" class="article article-type-post" itemscope
-  itemprop="blogPost" data-scroll-reveal>
-
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2020/05/30/%E4%BA%8C%E5%8F%89%E6%90%9C%E7%B4%A2%E6%A0%91%E7%9A%84%E5%90%8E%E5%BA%8F%E9%81%8D%E5%8E%86%E5%BA%8F%E5%88%97/"
-    >二叉搜索树的后序遍历序列</a
-  >
-</h2>
-  
-
-    </header>
-    
-
-    
-    <div class="article-meta">
-      <a href="/2020/05/30/%E4%BA%8C%E5%8F%89%E6%90%9C%E7%B4%A2%E6%A0%91%E7%9A%84%E5%90%8E%E5%BA%8F%E9%81%8D%E5%8E%86%E5%BA%8F%E5%88%97/" class="article-date">
-  <time datetime="2020-05-30T15:58:12.000Z" itemprop="datePublished">2020-05-30</time>
-</a>
-      
-      
-      
-      
-    </div>
-    
-
-    
-
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-
-
-      
-
-      
-      <p><strong>题目</strong><br>输入一个整数数组，判断该数组是不是某二叉搜索树的后序遍历的结果。如果是则输出Yes,否则输出No。假设输入的数组的任意两个数字都互不相同。</p>
-<p><strong>思路</strong>  </p>
-<p>二叉搜索树的特点是 <strong>left &lt; root &lt; right</strong>, 其后续遍历序列的最后一个元素一定是该二叉搜索树的根节点，因此判断思路是，遍历给定序列找到第一个大于<code>root</code>的节点值，判断后面的其他节点是否都大于<code>root</code>, 若都大于的话再去递归判断两个子树的序列， 否则的话返回<code>false</code>;递归终止条件为<code>left&gt;=right</code>。  </p>
-<p><strong>代码</strong>  </p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">VerifySquenceOfBST</span><span class="params">(<span class="keyword">int</span> [] sequence)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(sequence == <span class="keyword">null</span> || sequence.length == <span class="number">0</span>) <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">        <span class="keyword">int</span> length = sequence.length;</span><br><span class="line">        <span class="keyword">return</span> verify(sequence, <span class="number">0</span>, length-<span class="number">1</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">verify</span><span class="params">(<span class="keyword">int</span> [] seq, <span class="keyword">int</span> left, <span class="keyword">int</span> right)</span></span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(left &gt;= right) <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">        <span class="keyword">int</span> root = seq[right];</span><br><span class="line">        <span class="keyword">int</span> i=left;</span><br><span class="line">        <span class="keyword">while</span>(i &lt; right)&#123;</span><br><span class="line">            <span class="keyword">if</span>(seq[i] &gt; root) <span class="keyword">break</span>;</span><br><span class="line">            i++;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">int</span> temp = seq[right];</span><br><span class="line">        <span class="keyword">int</span> idx = i;</span><br><span class="line">        <span class="keyword">while</span>(i &lt; right)&#123;</span><br><span class="line">            <span class="keyword">if</span>(seq[i] &lt; temp) <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">            i++;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//left,i-1, i,right-1</span></span><br><span class="line">        <span class="keyword">return</span> verify(seq, left, idx-<span class="number">1</span>) || verify(seq, idx, right-<span class="number">1</span>);</span><br><span class="line">    &#125; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-      
-      <!-- reward -->
-      
-    </div>
-    
-    
-      <!-- copyright -->
-      
-    <footer class="article-footer">
-      
-      
-
-    </footer>
-
-  </div>
-
-  
-
-  
-
-  
-
-</article>
-    
-    <article id="post-从上往下打印二叉树" class="article article-type-post" itemscope
-  itemprop="blogPost" data-scroll-reveal>
-
-  <div class="article-inner">
-    
-    <header class="article-header">
-       
-<h2 itemprop="name">
-  <a class="article-title" href="/2020/05/30/%E4%BB%8E%E4%B8%8A%E5%BE%80%E4%B8%8B%E6%89%93%E5%8D%B0%E4%BA%8C%E5%8F%89%E6%A0%91/"
-    >从上往下打印二叉树</a
-  >
-</h2>
-  
-
-    </header>
-    
-
-    
-    <div class="article-meta">
-      <a href="/2020/05/30/%E4%BB%8E%E4%B8%8A%E5%BE%80%E4%B8%8B%E6%89%93%E5%8D%B0%E4%BA%8C%E5%8F%89%E6%A0%91/" class="article-date">
-  <time datetime="2020-05-30T14:49:36.000Z" itemprop="datePublished">2020-05-30</time>
-</a>
-      
-      
-      
-      
-    </div>
-    
-
-    
-
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-
-
-      
-
-      
-      <p><strong>题目</strong><br>从上往下打印出二叉树的每个节点，同层节点从左至右打印。</p>
-<p><strong>思路</strong><br>bfs遍历二叉树可按层序遍历节点，为了识别出每一层在队列中的位置，用一个变量<code>count</code>来计数，<code>count</code>保存的是该层的节点数。</p>
-<p><strong>代码</strong>  </p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.ArrayList;</span><br><span class="line"><span class="keyword">import</span> java.util.Queue;</span><br><span class="line"><span class="keyword">import</span> java.util.LinkedList;</span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">public class TreeNode &#123;</span></span><br><span class="line"><span class="comment">    int val = 0;</span></span><br><span class="line"><span class="comment">    TreeNode left = null;</span></span><br><span class="line"><span class="comment">    TreeNode right = null;</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">    public TreeNode(int val) &#123;</span></span><br><span class="line"><span class="comment">        this.val = val;</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">    &#125;</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">&#125;*/</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> ArrayList&lt;Integer&gt; <span class="title">PrintFromTopToBottom</span><span class="params">(TreeNode root)</span> </span>&#123;</span><br><span class="line">        ArrayList&lt;Integer&gt; res = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">        <span class="keyword">if</span>(root == <span class="keyword">null</span>) <span class="keyword">return</span> res;</span><br><span class="line">        Queue&lt;TreeNode&gt; q = <span class="keyword">new</span> LinkedList&lt;&gt;();</span><br><span class="line">        q.offer(root);</span><br><span class="line">        <span class="keyword">int</span> count = <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">while</span>(!q.isEmpty())&#123;</span><br><span class="line">           <span class="keyword">int</span> size = count;</span><br><span class="line">           count = <span class="number">0</span>;</span><br><span class="line">           <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;size; ++i)&#123;</span><br><span class="line">                TreeNode node = q.poll();</span><br><span class="line">                res.add(node.val);</span><br><span class="line">                <span class="keyword">if</span>(node.left != <span class="keyword">null</span>) &#123;</span><br><span class="line">                    q.offer(node.left);</span><br><span class="line">                    count++;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">if</span>(node.right != <span class="keyword">null</span>)&#123;</span><br><span class="line">                    q.offer(node.right);</span><br><span class="line">                    count++;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> res;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p><strong>知识点</strong><br>java中对queue的操作有两种:  </p>
-<table>
-<thead>
-<tr>
-<th align="center">操作</th>
-<th align="center">Throws exception</th>
-<th align="center">Returns special value</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="center"><strong>Insert</strong></td>
-<td align="center">add(e)</td>
-<td align="center">offer(e)</td>
-</tr>
-<tr>
-<td align="center"><strong>Remove</strong></td>
-<td align="center">remove()</td>
-<td align="center">poll()</td>
-</tr>
-<tr>
-<td align="center"><strong>Examine</strong></td>
-<td align="center">element()</td>
-<td align="center">peek()</td>
-</tr>
-</tbody></table>
 
       
       <!-- reward -->

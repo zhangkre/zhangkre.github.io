@@ -6,7 +6,7 @@
     
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
   <title>
-    可靠传输的实现机制 |  Silhouettes
+    java类的生命周期 |  Silhouettes
   </title>
   <meta name="generator" content="hexo-theme-yilia-plus">
   
@@ -31,7 +31,7 @@
   <div id="app">
     <main class="content">
       <section class="outer">
-  <article id="post-可靠传输的实现机制" class="article article-type-post" itemscope
+  <article id="post-java类的生命周期" class="article article-type-post" itemscope
   itemprop="blogPost" data-scroll-reveal>
 
   <div class="article-inner">
@@ -39,7 +39,7 @@
     <header class="article-header">
        
 <h1 class="article-title sea-center" style="border-left:0" itemprop="name">
-  可靠传输的实现机制
+  java类的生命周期
 </h1>
   
 
@@ -48,8 +48,8 @@
 
     
     <div class="article-meta">
-      <a href="/2020/07/10/%E5%8F%AF%E9%9D%A0%E4%BC%A0%E8%BE%93%E7%9A%84%E5%AE%9E%E7%8E%B0%E6%9C%BA%E5%88%B6/" class="article-date">
-  <time datetime="2020-07-09T16:03:00.000Z" itemprop="datePublished">2020-07-10</time>
+      <a href="/2020/07/18/java%E7%B1%BB%E7%9A%84%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F/" class="article-date">
+  <time datetime="2020-07-18T10:06:52.000Z" itemprop="datePublished">2020-07-18</time>
 </a>
       
       
@@ -59,7 +59,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-quill-pen-line"></i>
             <span class="post-meta-item-text"> 字数统计:</span>
-            <span class="post-count">517字</span>
+            <span class="post-count">1.6k字</span>
         </span>
     </span>
 
@@ -68,7 +68,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-book-open-line"></i>
             <span class="post-meta-item-text"> 阅读时长≈</span>
-            <span class="post-count">1分钟</span>
+            <span class="post-count">5分钟</span>
         </span>
     </span>
 </div>
@@ -95,36 +95,66 @@
       
 
       
-      <h2 id="可靠传输的实现机制"><a href="#可靠传输的实现机制" class="headerlink" title="可靠传输的实现机制"></a>可靠传输的实现机制</h2><ul>
-<li>停止等待协议（SW）</li>
-<li>后退N帧协议（GBN）</li>
-<li>选择重传协议（SR）</li>
-</ul>
+      <p><img src="https://pic.downk.cc/item/5f12c9b714195aa5947108bb.jpg" alt=""></p>
 <hr>
-<h3 id="1-停止等待协议（SW）"><a href="#1-停止等待协议（SW）" class="headerlink" title="1. 停止等待协议（SW）"></a>1. 停止等待协议（SW）</h3><p>要点：<br>    - 每发送一个数据就停止发送，等待对方的确认<br>    - 收到确认后再发送下一个数据帧</p>
-<p><img src="https://pic.downk.cc/item/5f07420114195aa5949240d5.jpg" alt=""><br><img src="https://pic.downk.cc/item/5f07440014195aa59492dac8.jpg" alt=""></p>
-<hr>
-<h3 id="2-后退N帧协议（GBN）"><a href="#2-后退N帧协议（GBN）" class="headerlink" title="2. 后退N帧协议（GBN）"></a>2. 后退N帧协议（GBN）</h3><p><em>要点:</em></p>
+<h1 id="加载"><a href="#加载" class="headerlink" title="加载"></a>加载</h1><h2 id="加载的过程"><a href="#加载的过程" class="headerlink" title="加载的过程"></a>加载的过程</h2><p>“加载”是“类加载”过程的一个阶段，不能混淆这两个名词。在加载阶段，虚拟机需要完成 3 件事：  </p>
 <ul>
-<li><strong>后退N帧协议是基于滑动窗口流量控制技术的。</strong><ul>
-<li>发送方的发送窗口尺寸W_T必须满足：1 &lt; W_T &lt; 2^n - 1 其中，n是构成帧序号的比特数量；  <ul>
-<li>若 W_T=1: 停止等待协议</li>
-<li>若 W_T &gt; 2^n - 1: 造成接收方无法分辨新、旧数据帧的问题</li>
+<li>通过类的全限定名获取该类的二进制字节流。</li>
+<li>将二进制字节流所代表的静态结构转化为方法区的运行时数据结构。</li>
+<li>在内存中创建一个代表该类的 java.lang.Class 对象，作为方法区这个类的各种数据的访问入口。</li>
 </ul>
-</li>
-<li>接收方的接收窗口尺寸W_R必须满足： W_R=1 因此，接收方只能按顺序接收数据帧</li>
+<h3 id="获取二进制字节流"><a href="#获取二进制字节流" class="headerlink" title="获取二进制字节流"></a>获取二进制字节流</h3><p>对于 Class 文件，虚拟机没有指明要从哪里获取、怎样获取。除了直接从编译好的 .class 文件中读取，还有以下几种方式： </p>
+<ul>
+<li>从 zip 包中读取，如 jar、war等</li>
+<li>从网络中获取，如 Applet</li>
+<li>通过动态代理技术生成代理类的二进制字节流</li>
+<li>由 JSP 文件生成对应的 Class 类</li>
+<li>从数据库中读取，如 有些中间件服务器可以选择把程序安装到数据库中来完成程序代码在集群间的分发。</li>
 </ul>
-</li>
-<li><strong>发送方可在未收到接收方确认帧的情况下，将序号落在发送窗口内的多个数据帧全部发送出去</strong></li>
-<li><strong>接收方只接收序号落在接收窗口内且无误码的数据帧，并且将接收窗口向前滑动一个位置，与此同时给发送方发回相应的确认帧。为了减小开销，</strong> <ul>
-<li><em>接收方不一定每收到一个按序到达且无误码的数据帧就给发送方发回一个确认帧，而是可以在连续收到好几个按序到达且无误码的数据帧后，才针对最后一个数据帧发送确认帧，这称为</em> <strong>累计确认</strong></li>
-<li><em>或者可以在自己有数据帧要发送的时候才对之前按序到达且无误码的数据帧进行</em> <strong>捎带确认</strong> </li>
+<h3 id="非数组类”与“数组类”加载比较"><a href="#非数组类”与“数组类”加载比较" class="headerlink" title="非数组类”与“数组类”加载比较"></a>非数组类”与“数组类”加载比较</h3><ul>
+<li>非数组类加载阶段可以使用系统提供的引导类加载器，也可以由用户自定义的类加载器完成，开发人员可以通过定义自己的类加载器控制字节流的获取方式（如重写一个类加载器的 loadClass() 方法）</li>
+<li>数组类本身不通过类加载器创建，它是由 Java 虚拟机直接创建的，再由类加载器创建数组中的元素类。</li>
 </ul>
-</li>
-<li><strong>发送方只有在收到对已发送数据帧的确认时，发送窗口才能向前相应滑动</strong></li>
-<li><strong>发送方发送窗口内某个已发送的数据帧产生超时重发时，其后续在发送窗口内且已发送的数据帧也必须全部重传，这就是后退N帧协议名称的由来</strong></li>
+<h3 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h3><ul>
+<li>虚拟机规范未规定 Class 对象的存储位置，对于 HotSpot 虚拟机而言，Class 对象比较特殊，它虽然是对象，但存放在方法区中。</li>
+<li>加载阶段与连接阶段的部分内容交叉进行，加载阶段尚未完成，连接阶段可能已经开始了。但这两个阶段的开始时间仍然保持着固定的先后顺序。</li>
 </ul>
 <hr>
+<h1 id="验证"><a href="#验证" class="headerlink" title="验证"></a>验证</h1><p>验证阶段确保 Class 文件的字节流中包含的信息符合当前虚拟机的要求，并且不会危害虚拟机自身的安全。  </p>
+<h2 id="验证的过程"><a href="#验证的过程" class="headerlink" title="验证的过程"></a>验证的过程</h2><ul>
+<li>文件格式验证：验证字节流是否符合 Class 文件格式的规范，并且能被当前版本的虚拟机处理，验证点如下：<ul>
+<li>是否以魔数 0XCAFEBABE 开头</li>
+<li>主次版本号是否在当前虚拟机处理范围内</li>
+<li>常量池是否有不被支持的常量类型</li>
+<li>指向常量的索引值是否指向了不存在的常量</li>
+<li>CONSTANT_Utf8_info 型的常量是否有不符合 UTF8 编码的数据</li>
+<li>……</li>
+</ul>
+</li>
+<li>元数据验证：对字节码描述信息进行语义分析，确保其符合 Java 语法规范。</li>
+<li>字节码验证：本阶段是验证过程中最复杂的一个阶段，是对方法体进行语义分析，保证方法在运行时不会出现危害虚拟机的事件。</li>
+<li>符号引用验证：本阶段发生在解析阶段，确保解析正常执行。</li>
+</ul>
+<hr>
+<h1 id="准备"><a href="#准备" class="headerlink" title="准备"></a>准备</h1><p>准备阶段是正式为<strong>类变量（或称“静态成员变量”）</strong>分配内存并设置初始值的阶段。这些变量（不包括实例变量）所使用的内存都在<strong>方法区</strong>中进行分配。</p>
+<p>初始值“通常情况下”是数据类型的零值<code>（0, null...）</code>，假设一个类变量的定义为：  </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> value = <span class="number">123</span>;</span><br></pre></td></tr></table></figure>
+<p>那么变量 <code>value</code> 在准备阶段过后的初始值为 <code>0</code>而不是 <code>123</code>，因为这时候尚未开始执行任何 Java 方法。</p>
+<p>存在“特殊情况”：如果类字段的字段属性表中存在 ConstantValue 属性，即<strong>final</strong>修饰的变量，那么在准备阶段 value 就会被初始化为 ConstantValue 属性所指定的值，假设上面类变量 value 的定义变为：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> value = <span class="number">123</span>;</span><br></pre></td></tr></table></figure>
+<p>那么在准备阶段虚拟机会根据<code>ConstantValue</code> 的设置将 <code>value</code> 赋值为 <code>123</code>。</p>
+<hr>
+<h1 id="解析"><a href="#解析" class="headerlink" title="解析"></a>解析</h1><p>一句话，解析阶段是虚拟机将常量池内的符号引用替换为直接引用的过程。</p>
+<hr>
+<h1 id="初始化"><a href="#初始化" class="headerlink" title="初始化"></a>初始化</h1><p>类初始化阶段是类加载过程的最后一步，是执行类构造器 <code>&lt;clinit&gt;()</code> 方法的过程。</p>
+<p><code>&lt;clinit&gt;()</code> 方法是由编译器自动收集类中的所有类变量的赋值动作和静态语句块（<code>static {}</code> 块）中的语句合并产生的，编译器收集的顺序是由语句在源文件中出现的顺序所决定的。</p>
+<p>静态语句块中只能访问定义在静态语句块之前的变量，定义在它之后的变量，在前面的静态语句块中可以赋值，但不能访问。如下方代码所示：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Test</span> </span>&#123;</span><br><span class="line">    <span class="keyword">static</span> &#123;</span><br><span class="line">        i = <span class="number">0</span>;  <span class="comment">// 给变量赋值可以正常编译通过</span></span><br><span class="line">        System.out.println(i);  <span class="comment">// 这句编译器会提示“非法向前引用”</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">int</span> i = <span class="number">1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>&lt;clinit&gt;()</code>方法不需要显式调用父类构造器，虚拟机会保证在子类的 <code>&lt;clinit&gt;()</code> 方法执行之前，父类的 <code>&lt;clinit&gt;()</code> 方法已经执行完毕。<br>由于父类的<code>&lt;clinit&gt;()</code>方法先执行，意味着父类中定义的静态语句块要优先于子类的变量赋值操作。如下方代码所示：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">Parent</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> A = <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">static</span> &#123;</span><br><span class="line">        A = <span class="number">2</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">Sub</span> <span class="keyword">extends</span> <span class="title">Parent</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span> B = A;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">    System.out.println(Sub.B); <span class="comment">// 输出 2</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>&lt;clinit&gt;()</code>方法不是必需的，如果一个类没有静态语句块，也没有对类变量的赋值操作，那么编译器可以不为这个类生成 <code>&lt;clinit&gt;()</code> 方法。</p>
+<p>接口中不能使用静态代码块，但接口也需要通过<code>&lt;clinit&gt;()</code>方法为接口中定义的静态成员变量显式初始化。但接口与类不同，接口的 <code>&lt;clinit&gt;()</code> 方法不需要先执行父类的<code>&lt;clinit&gt;()</code> 方法，只有当父接口中定义的变量使用时，父接口才会初始化。</p>
+<p>虚拟机会保证一个类的<code>&lt;clinit&gt;()</code>方法在多线程环境中被正确加锁、同步。如果多个线程同时去初始化一个类，那么只会有一个线程去执行这个类的 <code>&lt;clinit&gt;()</code> 方法。</p>
 
       
       <!-- reward -->
@@ -190,7 +220,7 @@
     <a class="modal-close" href="javascript:;"><i class="ri-close-circle-line"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://zhangkre.github.io/2020/07/10/%E5%8F%AF%E9%9D%A0%E4%BC%A0%E8%BE%93%E7%9A%84%E5%AE%9E%E7%8E%B0%E6%9C%BA%E5%88%B6/" alt="微信分享二维码">
+      <img src="//api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://zhangkre.github.io/2020/07/18/java%E7%B1%BB%E7%9A%84%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -206,19 +236,10 @@
   
   <nav class="article-nav">
     
-      <a href="/2020/07/17/jvm%E5%86%85%E5%AD%98%E5%88%86%E5%B8%83/" class="article-nav-link">
-        <strong class="article-nav-caption">上一篇</strong>
-        <div class="article-nav-title">
-          
-            jvm内存分布
-          
-        </div>
-      </a>
     
-    
-      <a href="/2020/07/09/JAVA%E9%9B%86%E5%90%88%E7%B1%BB/" class="article-nav-link">
+      <a href="/2020/07/18/init%E5%92%8Ccinit%E7%9A%84%E5%8C%BA%E5%88%AB/" class="article-nav-link">
         <strong class="article-nav-caption">下一篇</strong>
-        <div class="article-nav-title">JAVA集合类</div>
+        <div class="article-nav-title">init和clinit的区别</div>
       </a>
     
   </nav>
